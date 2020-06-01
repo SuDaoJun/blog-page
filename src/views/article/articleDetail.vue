@@ -249,20 +249,37 @@ export default {
       operateId: '',
       tocList: "",
       topCommentList: [],
-      commentList: []
+      commentList: [],
+      linkTopArr: []
     };
   },
-  created() {},
+  created() {
+  },
   mounted() {
-    if (this.$route.query.articleId) {
-      this.articleId = this.$route.query.articleId;
-      this.getArticleData();
-    }
+    this.initData() 
   },
   methods: {
+    async initData(){
+      if (this.$route.query.articleId) {
+        this.articleId = this.$route.query.articleId
+        await this.getArticleData()
+        this.getCommentList()
+        let linkArr = document.querySelectorAll(".rich-title")
+        let linkTopArr = []
+        if(linkArr.length > 0){
+          linkArr.forEach(item=>{
+            linkTopArr.push(item.offsetTop + 58)
+          })
+         linkTopArr.push(2 * linkTopArr[linkTopArr.length-1])
+         this.linkTopArr = linkTopArr
+        }
+        window.addEventListener('scroll', this.handleScroll, true)
+      }
+    },
     getArticleData() {
-      let { articleId, userInfo } = this;
-      this.$api.article
+      let { articleId, userInfo } = this
+      return new Promise((resolve, reject)=>{
+        this.$api.article
         .articleDetail({
           id: articleId
         })
@@ -286,11 +303,32 @@ export default {
             } else {
               this.isLike = false;
             }
-            this.getCommentList();
           } else {
             this.$message.warning("获取文章详情失败");
           }
-        });
+          resolve()
+        })
+      })
+    },
+    // 滚动监听
+    handleScroll(){
+      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      let {linkTopArr} = this
+      const linkArr = document.querySelectorAll(".catalog-link")
+      if(linkArr.length > 0){
+        for(let i = 0; i < linkTopArr.length; i++){
+          let start = linkTopArr[i]
+          let top = linkTopArr[i + 1]
+          if (scrollTop >= start && scrollTop <= top) {
+              // 获取文章滚动到目录的目标元素
+            linkArr.forEach((item) => {
+              item.classList.remove('link-active')
+            })
+            linkArr[i].classList.add('link-active')
+            break;
+          }
+        }
+      }
     },
     // 获取评论列表
     getCommentList() {
@@ -381,7 +419,7 @@ export default {
               let code = res.code;
               if (code === this.$constant.reqSuccess) {
                 this.commentTxt = "";
-                this.getArticleData();
+                this.getCommentList();
               }
             });
         } else {
@@ -417,7 +455,7 @@ export default {
             console.log(res)
             let code = res.code
             if(code === this.$constant.reqSuccess){
-              this.getArticleData()
+              this.getCommentList()
             }else{
               this.$message.warning('评论回复失败')
             }
@@ -444,6 +482,9 @@ export default {
         behavior: "smooth"
       });
     }
+  },
+  beforeDestroy(){
+    window.removeEventListener("scroll",this.handleScroll)
   },
   watch: {
     userInfo: {
@@ -481,6 +522,9 @@ export default {
       font-size: 34px;
       font-weight: 600;
       text-align: center;
+    }
+    .content-data{
+      min-height: 50vh;
     }
     .content-header {
       margin-bottom: 40px;
@@ -635,13 +679,14 @@ export default {
     .catalog-link {
       font-size: 16px;
       line-height: 24px;
+      margin-bottom: 8px;
       color: #909090;
       @include overRow;
       cursor: pointer;
       padding-left: 20px;
       position: relative;
       &:hover {
-        color: #1890ff;
+        background-color: #ebedef;
       }
       &::before {
         content: "\E78B";
@@ -651,6 +696,9 @@ export default {
         left: 4px;
         top: 0;
       }
+    }
+    .link-active{
+      color: #1890ff;
     }
   }
 }

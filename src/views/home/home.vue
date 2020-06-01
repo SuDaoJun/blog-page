@@ -7,6 +7,9 @@
       </div>
       <side-bar></side-bar>
     </div>
+    <div class="wrapper-footer">
+      <a href="http://www.beian.miit.gov.cn/">湘ICP备20010588号</a>
+    </div>
   </div>
 </template>
 
@@ -51,5 +54,11 @@ export default {
     .index-router{
       flex: 1;
     }
+  }
+  .wrapper-footer{
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+    display: none;
   }
 </style>

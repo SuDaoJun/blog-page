@@ -78,10 +78,10 @@ export default {
     }
   },
   created() {
-
+    this.getDataList()
   },
   mounted() {
-    this.getDataList()
+    
   },
   methods: {
     getDataList(page){

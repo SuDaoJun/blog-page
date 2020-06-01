@@ -99,10 +99,13 @@ export default {
       tagList: []
     }
   },
-  mounted() {
+  created(){
     this.getMottoData()
     this.getTagList()
     this.getLinkList()
+  },
+  mounted() {
+    
   },
   methods: {
     // 获取励志语
