@@ -9,7 +9,7 @@
          <div class="item-body" :style="{backgroundImage: `url(${require(`../../assets/img/note${item.bg}_2.png`)})`}">{{item.content}}</div>
          <div class="item-footer" :style="{backgroundImage: `url(${require(`../../assets/img/note${item.bg}_3.png`)})`}">
              <el-image v-if='item.createUser'
-               :src='baseURL+"/file/down?downId="+item.createUser[0].avatarId' class='image-avatar'>
+               :src='baseURL+"/blogAdmin/file/down?downId="+item.createUser[0].avatarId' class='image-avatar'>
                <div slot="error" class="icon-avatar">
                  <i class="el-icon-user-solid"></i>
                </div>
@@ -104,20 +104,33 @@ export default {
               return false
             }
           },
-          inputErrorMessage: '留言内容不为空'
-        }).then(({ value }) => {
-          this.$api.message.messageAdd({
-            content: value
-          }).then((res)=>{
-            console.log(res)
-            let code = res.code
-            if(code === this.$constant.reqSuccess){
-              let data = this.formatStyleByMessage(res.data)
-              this.messageList.push(data)
-            }else{
-              this.$message.warning('留言失败')
+          inputErrorMessage: '留言内容不为空',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true;
+              instance.confirmButtonText = '提交中...';
+              let value = instance.$refs.input.value
+              this.$api.message.messageAdd({
+                content: value
+              }).then((res)=>{
+                console.log(res)
+                let code = res.code
+                if(code === this.$constant.reqSuccess){
+                  let data = this.formatStyleByMessage(res.data)
+                  this.messageList.push(data)
+                  instance.confirmButtonLoading = false;
+                  done();
+                }else{
+                  this.$message.warning('留言失败')
+                }
+              })
+            } else {
+              done();
             }
-          })
+          }
+        })
+        .then(({ value }) => {
+          
         }).catch(() => {      
         })
       } else {

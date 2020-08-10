@@ -27,7 +27,7 @@
         <div class="content-header">
           <div class="header-info">
             <el-image v-if='articleDetail.createUser'
-              :src='baseURL+"/file/down?downId="+articleDetail.createUser.avatarId' class='image-avatar'>
+              :src='baseURL+"/blogAdmin/file/down?downId="+articleDetail.createUser.avatarId' class='image-avatar'>
               <div slot="error" class="icon-avatar">
                 <i class="el-icon-user-solid"></i>
               </div>
@@ -58,7 +58,7 @@
             <div class="message-title" ref='articleComment'>文章评论</div>
           </el-divider>
           <div class="message-publish">
-            <el-image v-if='userInfo && userInfo.avatarId' :src='baseURL+"/file/down?downId="+userInfo.avatarId'
+            <el-image v-if='userInfo && userInfo.avatarId' :src='baseURL+"/blogAdmin/file/down?downId="+userInfo.avatarId'
               class='image-avatar'>
               <div slot="error" class="icon-avatar">
                 <i class="el-icon-user-solid"></i>
@@ -74,7 +74,7 @@
                 placeholder="写下你的评论..."></el-input>
               <div class="textarea-submit">
                 <el-button round @click.native='commentTxt = ""'>重 置</el-button>
-                <el-button type="success" round style='margin-left: 30px;' @click='commentPublish'>发 布</el-button>
+                <el-button type="success" round style='margin-left: 30px;' :loading='loadObj.commentLoad' @click='commentPublish'>发 布</el-button>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@
             <h3>置顶评论({{topCommentList.length}})</h3>
             <div class="comment-list">
               <div class="list-box" v-for='item in topCommentList' :key='item._id'>
-                <el-image v-if='item.createUser' :src='baseURL+"/file/down?downId="+item.createUser.avatarId'
+                <el-image v-if='item.createUser' :src='baseURL+"/blogAdmin/file/down?downId="+item.createUser.avatarId'
                   class='image-avatar'>
                   <div slot="error" class="icon-avatar">
                     <i class="el-icon-user-solid"></i>
@@ -98,14 +98,14 @@
                   <div class="item-content">{{item.content}}</div>
                   <div class="item-replay">
                     <div class="replay-time">{{item.createTime}}</div>
-                    <div class="replay-content" @click='replyComment("sup",item)'>
+                    <el-button type="text" class="replay-content" @click='replyComment("sup",item)'>
                       <i class='el-icon-chat-dot-round'></i>
                       回复
-                    </div>
+                    </el-button>
                   </div>
                   <div class="item-sub" :style='{height: item.expand?"100%":"0"}' v-show='item.replyCommentList.length > 0'>
                     <div class="list-box" v-for='itemSub in item.replyCommentList' :key='itemSub._id' v-show='itemSub.status == "1"'>
-                      <el-image v-if='itemSub.replyUser' :src='baseURL+"/file/down?downId="+itemSub.replyUser.avatarId'
+                      <el-image v-if='itemSub.replyUser' :src='baseURL+"/blogAdmin/file/down?downId="+itemSub.replyUser.avatarId'
                         class='image-avatar'>
                         <div slot="error" class="icon-avatar">
                           <i class="el-icon-user-solid"></i>
@@ -126,10 +126,10 @@
                         </div>
                         <div class="item-replay">
                           <div class="replay-time">{{itemSub.createTime}}</div>
-                          <div class="replay-content" @click='replyComment("sub",itemSub)'>
+                          <el-button type="text" class="replay-content" @click='replyComment("sub",itemSub)'>
                             <i class='el-icon-chat-dot-round'></i>
                             回复
-                          </div>
+                          </el-button>
                         </div>
                       </div>
                     </div>
@@ -145,7 +145,7 @@
             <h3>全部评论({{commentList.length}})</h3>
             <div class="comment-list">
               <div class="list-box" v-for='item in commentList' :key='item._id'>
-                <el-image v-if='item.createUser' :src='baseURL+"/file/down?downId="+item.createUser.avatarId'
+                <el-image v-if='item.createUser' :src='baseURL+"/blogAdmin/file/down?downId="+item.createUser.avatarId'
                   class='image-avatar'>
                   <div slot="error" class="icon-avatar">
                     <i class="el-icon-user-solid"></i>
@@ -161,14 +161,14 @@
                   <div class="item-content">{{item.content}}</div>
                   <div class="item-replay">
                     <div class="replay-time">{{item.createTime}}</div>
-                    <div class="replay-content" @click='replyComment("sup",item)'>
+                    <el-button type="text" class="replay-content" @click='replyComment("sup",item)'>
                       <i class='el-icon-chat-dot-round'></i>
                       回复
-                    </div>
+                    </el-button>
                   </div>
                   <div class="item-sub" :style='{height: item.expand?"100%":"0"}' v-show='item.replyCommentList.length > 0'>
                     <div class="list-box" v-for='itemSub in item.replyCommentList' :key='itemSub._id' v-show='itemSub.status == "1"'>
-                      <el-image v-if='itemSub.replyUser' :src='baseURL+"/file/down?downId="+itemSub.replyUser.avatarId'
+                      <el-image v-if='itemSub.replyUser' :src='baseURL+"/blogAdmin/file/down?downId="+itemSub.replyUser.avatarId'
                         class='image-avatar'>
                         <div slot="error" class="icon-avatar">
                           <i class="el-icon-user-solid"></i>
@@ -189,10 +189,10 @@
                         </div>
                         <div class="item-replay">
                           <div class="replay-time">{{itemSub.createTime}}</div>
-                          <div class="replay-content" @click='replyComment("sub",itemSub)'>
+                          <el-button type="text" class="replay-content" @click='replyComment("sub",itemSub)'>
                             <i class='el-icon-chat-dot-round'></i>
                             回复
-                          </div>
+                          </el-button>
                         </div>
                       </div>
                     </div>
@@ -212,7 +212,7 @@
     <el-dialog :title="articleDetail.meta.likeTotal + '人点赞'" :visible.sync="likeModal" width='640px'>
       <div>
         <div class="like-dialog" v-for='item in articleDetail.linkUser' :key='item._id'>
-          <el-image v-if='item.avatarId' :src='baseURL+"/file/down?downId="+item.avatarId' class='image-avatar'>
+          <el-image v-if='item.avatarId' :src='baseURL+"/blogAdmin/file/down?downId="+item.avatarId' class='image-avatar'>
             <div slot="error" class="icon-avatar">
               <i class="el-icon-user-solid"></i>
             </div>
@@ -237,6 +237,10 @@ import "@/assets/css/wangEnduit.css";
 export default {
   data() {
     return {
+      submitLoading: false,
+      loadObj: {
+        commentLoad: false
+      },
       commentTxt: "",
       isLike: false,
       likeModal: false,
@@ -410,12 +414,14 @@ export default {
       let { articleId, commentTxt } = this;
       if (sessionStorage.getItem("token")) {
         if (commentTxt) {
+          this.loadObj.commentLoad = true
           this.$api.article
             .articleComment({
               articleId,
               content: commentTxt
             })
             .then(res => {
+              this.loadObj.commentLoad = false
               let code = res.code;
               if (code === this.$constant.reqSuccess) {
                 this.commentTxt = "";
@@ -448,6 +454,7 @@ export default {
           inputErrorMessage: '评论内容不为空'
         }).then(({ value }) => {
           this.$api.article.replyCommentAdd({
+            articleId,
             commentId: type === 'sup'?item._id:item.commentId,
             toUser: type === 'sup'?item.createUser._id:item.replyUser._id,
             content: value
@@ -608,9 +615,6 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                .replay-content {
-                  cursor: pointer;
-                }
               }
               .item-sub{
                 padding: 0 10px;

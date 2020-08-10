@@ -36,7 +36,7 @@
       :modal-append-to-body='false'>
       <div class="login-dialog">
         <my-form :ref='loginForm.ref' :formConfig="loginForm"></my-form>
-        <el-button type="primary" style='width: 100%;' @click.native="userLogin">登 录</el-button>
+        <el-button type="primary" style='width: 100%;' :loading="submitLoad"  @click.native="userLogin">登 录</el-button>
         <el-button type="success" style='width: 100%;margin-top: 20px;' @click.native="goRegister">去 注 册</el-button>
       </div>
     </el-dialog>
@@ -44,7 +44,7 @@
       :modal-append-to-body='false'>
       <div class="login-dialog">
         <my-form :ref='registerForm.ref' :formConfig="registerForm"></my-form>
-        <el-button type="primary" style='width: 100%;' @click.native="userRegister">注 册</el-button>
+        <el-button type="primary" style='width: 100%;' :loading="submitLoad"  @click.native="userRegister">注 册</el-button>
         <el-button type="success" style='width: 100%;margin-top: 20px;' @click.native="comeBackLogin">返 回 登 录</el-button>
       </div>
     </el-dialog>
@@ -80,6 +80,7 @@ export default {
     return {
       baseURL: this.$baseURL,
       activeIndex: "article",
+      submitLoad: false,
       menuList: [
         {
           name: "文章",
@@ -243,6 +244,7 @@ export default {
       let formModel = this.registerForm.formModel;
       this.$refs["registerRef"].$refs["registerRef"].validate(valid => {
         if (valid) {
+          this.submitLoad = true
           this.$api.user
             .register({
               email: formModel.email,
@@ -252,6 +254,7 @@ export default {
               type: 'pageUser'
             })
             .then(res => {
+              this.submitLoad = false
               let code = res.code;
               if (code === this.$constant.reqSuccess) {
                 this.$message.success("账号注册成功，请登录")
@@ -275,13 +278,14 @@ export default {
       let formModel = this.loginForm.formModel;
       this.$refs["loginRef"].$refs["loginRef"].validate(valid => {
         if (valid) {
+          this.submitLoad = true
           this.$api.user
             .login({
               name: formModel.name,
               password: formModel.password
             })
             .then(res => {
-              console.log(res);
+              this.submitLoad = false
               let code = res.code;
               if (code === this.$constant.reqSuccess) {
                 this.userInfo = res.data.user;
