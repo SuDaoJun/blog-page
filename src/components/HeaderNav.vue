@@ -12,7 +12,7 @@
         </el-menu>
       </div>
       <div class="content-info" v-if='userInfo'>
-        <el-image v-if='userInfo.avatarId' :src='baseURL+"/blogAdmin/file/down?downId="+userInfo.avatarId'
+        <el-image @click='routhHome' v-if='userInfo.avatarId' :src='baseURL+"/blogAdmin/file/down?downId="+userInfo.avatarId'
           class='image-circle'>
           <div slot="error" class="image-slot">
             <i class="el-icon-user-solid"></i>
@@ -321,6 +321,9 @@ export default {
         name = 'article'
       }
       this.activeIndex = name
+    },
+    routhHome(){
+      this.$router.push({path: '/article'})
     },
     //  菜单点击
     handleSelect(index,indexPath) {

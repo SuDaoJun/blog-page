@@ -1,7 +1,7 @@
 <template>
   <div class="side-bar">
     <div class="bar-info">
-      <div class="info-avatar">
+      <div class="info-avatar" @click='routerHome'>
         <el-image
         :src="require('../assets/img/avatar.png')"></el-image>
       </div>
@@ -116,6 +116,9 @@ export default {
         this.motto = mottoArr[week]?mottoArr[week].title:'愿你成为自己喜欢的模样，不抱怨，不将就'
       })
     },
+    routerHome(){
+      this.$router.push({path: '/article'})
+    },
     // 获取文章标签列表
     getTagList(){
       this.$api.statistics.tagList().then(res=>{
@@ -185,6 +188,7 @@ export default {
       left: 50%;
       top: -40px;
       transform: translateX(-50%);
+      cursor: pointer;
     }
     .info-title{
       font-size: 24px;
