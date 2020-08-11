@@ -142,7 +142,7 @@ function toToc(data) {
 
 export function catalogList(content) {
   // 去除marked解析生成h标题标签中的id
-  content = content.replace(/(\sid\s*=[\s\'\"].*?[\s\'\"])/g,"")
+  // content = content.replace(/(\sid\s*=[\s\'\"].*?[\s\'\"])/g,"")
   const toc = content.match(/<[hH][1-6]>.*?<\/[hH][1-6]>/g)
   let tocList = null
   if (toc && toc.length > 0) {

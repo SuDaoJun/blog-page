@@ -235,7 +235,6 @@ import TagBox from "@/components/TagBox";
 import { catalogList, scrollAnimation } from "@/utils/utils";
 import "@/assets/css/wangEnduit.css";
 import "@/assets/css/markdown.css";
-let marked = require('marked');
 export default {
   data() {
     return {
@@ -274,7 +273,7 @@ export default {
         let linkTopArr = []
         if(linkArr.length > 0){
           linkArr.forEach(item=>{
-            linkTopArr.push(item.offsetTop - 2)
+            linkTopArr.push(item.offsetTop + 30)
           })
          linkTopArr.push(2 * linkTopArr[linkTopArr.length-1])
          this.linkTopArr = linkTopArr
@@ -294,9 +293,6 @@ export default {
           if (code === this.$constant.reqSuccess) {
             let data = res.data;
             let content = data.content
-            if(data.contentType == '1'){
-              content = marked(content)
-            }
             let contentData = catalogList(content);
             this.tocList = contentData.tocList;
             data.content = contentData.content;
