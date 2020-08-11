@@ -168,7 +168,7 @@ export default {
 <style lang="scss" scoped>
 .side-bar{
   width: 350px;
-  height: calc(100vh - 100px);
+  height: calc(100% - 100px);
   margin-left: 30px;
   position: sticky;
   top: 100px;

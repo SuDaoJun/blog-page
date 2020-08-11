@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <header-nav positionValue='relative'></header-nav>
+    <header-nav></header-nav>
     <div class="article-detail">
       <div class="detail-like">
         <div class="box-like">
@@ -20,7 +20,7 @@
           <span style='color: #969696'>返回</span>
         </div>
       </div>
-      <div class="detail-content">
+      <div class="detail-content" id='article-content'>
         <div class="content-title">
           {{articleDetail.title}}
         </div>
@@ -52,7 +52,7 @@
              <tag-box :tagList='articleDetail.tags'></tag-box>
            </div> -->
         </div>
-        <div class="content-data w-e-text" v-html='articleDetail.content' v-highlight></div>
+        <div class="content-data w-e-text markdown-body" v-html='articleDetail.content' v-highlight></div>
         <div class="content-message">
           <el-divider>
             <div class="message-title" ref='articleComment'>文章评论</div>
@@ -232,8 +232,10 @@
 <script>
 import HeaderNav from "@/components/HeaderNav";
 import TagBox from "@/components/TagBox";
-import { catalogList } from "@/utils/utils";
+import { catalogList, scrollAnimation } from "@/utils/utils";
 import "@/assets/css/wangEnduit.css";
+import "@/assets/css/markdown.css";
+let marked = require('marked');
 export default {
   data() {
     return {
@@ -272,7 +274,7 @@ export default {
         let linkTopArr = []
         if(linkArr.length > 0){
           linkArr.forEach(item=>{
-            linkTopArr.push(item.offsetTop + 58)
+            linkTopArr.push(item.offsetTop - 2)
           })
          linkTopArr.push(2 * linkTopArr[linkTopArr.length-1])
          this.linkTopArr = linkTopArr
@@ -291,7 +293,11 @@ export default {
           let code = res.code;
           if (code === this.$constant.reqSuccess) {
             let data = res.data;
-            let contentData = catalogList(data.content);
+            let content = data.content
+            if(data.contentType == '1'){
+              content = marked(content)
+            }
+            let contentData = catalogList(content);
             this.tocList = contentData.tocList;
             data.content = contentData.content;
             this.articleDetail = data;
@@ -347,7 +353,6 @@ export default {
           sortOrders: "-1"
         })
         .then(res => {
-          console.log(res);
           let data = res.data.data;
           let topArr = [];
           if (data.length > 0) {
@@ -459,7 +464,6 @@ export default {
             toUser: type === 'sup'?item.createUser._id:item.replyUser._id,
             content: value
           }).then((res)=>{
-            console.log(res)
             let code = res.code
             if(code === this.$constant.reqSuccess){
               this.getCommentList()
@@ -476,12 +480,15 @@ export default {
     },
     // 右侧导航点击
     tocClick(e) {
-      console.log(e);
       let id = e.target.id;
       if (id) {
-        document.querySelector(`#${id}`).scrollIntoView({
-          behavior: "smooth"
-        });
+        let topPosition = document.getElementById(id).offsetTop
+        const currentY = document.documentElement.scrollTop || document.body.scrollTop
+        scrollAnimation(currentY, topPosition - 65)
+        // 头部有fixed，会出现遮挡情况
+        // document.querySelector(`#${id}`).scrollIntoView({
+        //   behavior: "smooth"
+        // });
       }
     },
     viewComment() {
@@ -518,6 +525,7 @@ export default {
 .article-detail {
   width: 1200px;
   margin: 0 auto;
+  padding-top: 60px;
   position: relative;
   display: flex;
   .detail-content {

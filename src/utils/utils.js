@@ -59,6 +59,25 @@ export const timeLocalStorage = {
     return null;
   }
 }
+// 滚动动画
+export function scrollAnimation(currentY, targetY) {
+
+ // 计算需要移动的距离
+ let needScrollTop = targetY - currentY
+ let _currentY = currentY
+ setTimeout(() => {
+   // 一次调用滑动帧数，每次调用会不一样
+   const dist = Math.ceil(needScrollTop / 10)
+   _currentY += dist
+   window.scrollTo(_currentY, currentY)
+   // 如果移动幅度小于十个像素，直接移动，否则递归调用，实现动画效果
+   if (needScrollTop > 10 || needScrollTop < -10) {
+     scrollAnimation(_currentY, targetY)
+   } else {
+     window.scrollTo(_currentY, targetY)
+   }
+ }, 10)
+}
 
 // message弹窗只显示一个
 let messageInstance = null;
@@ -122,6 +141,8 @@ function toToc(data) {
 }
 
 export function catalogList(content) {
+  // 去除marked解析生成h标题标签中的id
+  content = content.replace(/(\sid\s*=[\s\'\"].*?[\s\'\"])/g,"")
   const toc = content.match(/<[hH][1-6]>.*?<\/[hH][1-6]>/g)
   let tocList = null
   if (toc && toc.length > 0) {

@@ -16,7 +16,7 @@ export default {
     }
   },
   created() {
-    let str = "shizuku";
+    document.body.removeChild(document.getElementById('Loading'))
     setTimeout(() => {
       window.L2Dwidget.init({
         pluginRootPath: "static/live2dw/",
