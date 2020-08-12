@@ -264,23 +264,6 @@ export default {
     this.initData() 
   },
   methods: {
-    async initData(){
-      if (this.$route.query.articleId) {
-        this.articleId = this.$route.query.articleId
-        await this.getArticleData()
-        this.getCommentList()
-        let linkArr = document.querySelectorAll(".rich-title")
-        let linkTopArr = []
-        if(linkArr.length > 0){
-          linkArr.forEach(item=>{
-            linkTopArr.push(item.offsetTop + 30)
-          })
-         linkTopArr.push(2 * linkTopArr[linkTopArr.length-1])
-         this.linkTopArr = linkTopArr
-        }
-        window.addEventListener('scroll', this.handleScroll, true)
-      }
-    },
     getArticleData() {
       let { articleId, userInfo } = this
       return new Promise((resolve, reject)=>{
@@ -316,6 +299,23 @@ export default {
         })
       })
     },
+    async initData(){
+      if (this.$route.query.articleId) {
+        this.articleId = this.$route.query.articleId
+        await this.getArticleData()
+        this.getCommentList()
+        let linkArr = document.querySelectorAll(".rich-title")
+        let linkTopArr = []
+        if(linkArr.length > 0){
+          linkArr.forEach(item=>{
+            linkTopArr.push(item.offsetTop - 130)
+          })
+         linkTopArr.push(2 * linkTopArr[linkTopArr.length-1])
+         this.linkTopArr = linkTopArr
+        }
+        window.addEventListener('scroll', this.handleScroll, true)
+      }
+    },
     // 滚动监听
     handleScroll(){
       let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
@@ -334,6 +334,19 @@ export default {
             break;
           }
         }
+      }
+    },
+    // 右侧导航点击
+    tocClick(e) {
+      let id = e.target.id;
+      if (id) {
+        let topPosition = document.getElementById(`content-${id}`).offsetTop
+        const currentY = document.documentElement.scrollTop || document.body.scrollTop
+        scrollAnimation(currentY, topPosition - 65)
+        // 头部有fixed，会出现遮挡情况
+        // document.querySelector(`#${id}`).scrollIntoView({
+        //   behavior: "smooth"
+        // });
       }
     },
     // 获取评论列表
@@ -472,19 +485,6 @@ export default {
       } else {
         this.$store.dispatch("operateLoginModal");
         this.$message.warning("登录才能回复评论，请先登录");
-      }
-    },
-    // 右侧导航点击
-    tocClick(e) {
-      let id = e.target.id;
-      if (id) {
-        let topPosition = document.getElementById(id).offsetTop
-        const currentY = document.documentElement.scrollTop || document.body.scrollTop
-        scrollAnimation(currentY, topPosition - 65)
-        // 头部有fixed，会出现遮挡情况
-        // document.querySelector(`#${id}`).scrollIntoView({
-        //   behavior: "smooth"
-        // });
       }
     },
     viewComment() {

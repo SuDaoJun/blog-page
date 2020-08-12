@@ -69,14 +69,14 @@ export function scrollAnimation(currentY, targetY) {
    // 一次调用滑动帧数，每次调用会不一样
    const dist = Math.ceil(needScrollTop / 10)
    _currentY += dist
-   window.scrollTo(_currentY, currentY)
+   window.scrollTo(0, currentY)
    // 如果移动幅度小于十个像素，直接移动，否则递归调用，实现动画效果
    if (needScrollTop > 10 || needScrollTop < -10) {
      scrollAnimation(_currentY, targetY)
    } else {
-     window.scrollTo(_currentY, targetY)
+     window.scrollTo(0, targetY)
    }
- }, 10)
+ }, 8)
 }
 
 // message弹窗只显示一个
@@ -147,7 +147,7 @@ export function catalogList(content) {
   let tocList = null
   if (toc && toc.length > 0) {
     toc.forEach((item, index) => {
-      let _toc = `<div class='rich-title' id='title${index}'>${item} </div>`
+      let _toc = `<div class='rich-title' id='content-title${index}'>${item} </div>`
       content = content.replace(item, _toc)
     })
     tocList = toToc(toc)
