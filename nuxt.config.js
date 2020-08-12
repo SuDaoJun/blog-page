@@ -31,7 +31,7 @@ export default {
   css: [
     'element-ui/lib/theme-chalk/index.css',
     '@/assets/css/reset.css',
-    // '@/assets/css/common.scss'
+    '@/assets/css/common.scss'
   ],
   styleResources: {
     scss: '@/assets/css/base.scss'
@@ -41,7 +41,9 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '@/plugins/element-ui'
+    {src:'@/plugins/element-ui', ssr:false },
+    {src:'@/plugins/nprogress', ssr:false },
+    {src:'@/plugins/axios', ssr:false }
   ],
   /*
   ** Auto import components
@@ -58,6 +60,7 @@ export default {
   */
   modules: [
     '@nuxtjs/style-resources',
+    '@nuxtjs/axios'
   ],
   /*
   ** Build configuration
@@ -65,5 +68,6 @@ export default {
   */
   build: {
     transpile: [/^element-ui/],
+    vendor: ['element-ui','axios'],
   }
 }
