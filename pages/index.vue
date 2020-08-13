@@ -1,54 +1,64 @@
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">
-        nuxt-blog
-      </h1>
+  <div class="wrapper">
+    <header-nav></header-nav>
+    <div class="wrapper-index">
+      <div class="index-router">
+        <nuxt-child />
+      </div>
+      <side-bar></side-bar>
+    </div>
+    <div class="wrapper-footer">
+      <a href="http://www.beian.miit.gov.cn/">æ¹˜ICPå¤‡20010588å�·</a>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import HeaderNav from '@/components/HeaderNav'
+import SideBar from '@/components/SideBar'
+export default {
+  data() {
+    return {
+
+    }
+  },
+  created() {
+
+  },
+  mounted() {
+
+  },
+  methods: {
+
+  },
+  watch: {
+
+  },
+  components: {
+    HeaderNav,
+    SideBar
+  },
+  computed: {
+
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
+  .wrapper-index{
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 100px;
+    position: relative;
+    display: flex;
+    .index-router{
+      flex: 1;
+    }
+  }
+  .wrapper-footer{
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+    display: none;
+  }
 </style>

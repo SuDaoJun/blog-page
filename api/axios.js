@@ -3,7 +3,7 @@ import qs from 'qs'
 import { Message } from 'element-ui';
 import router from '@/router'
 
-export let baseURL = process.env.NODE_ENV == 'production'?'http://sdjBlog.cn:3000':'http://localhost:3000'
+export let baseURL = process.env.NODE_ENV == 'development'?'http://localhost:3000':'http://sdjBlog.cn:3000'
 let axios = Axios.create({
     baseURL,
     // timeout: 1000 * 10,

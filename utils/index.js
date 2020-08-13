@@ -1,0 +1,1 @@
+export let baseURL = process.env.NODE_ENV == 'development'?'http://localhost:3000':'http://sdjBlog.cn:3000'

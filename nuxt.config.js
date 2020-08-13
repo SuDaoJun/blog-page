@@ -23,6 +23,11 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script:[
+      {
+        src:'/live2dw/lib/L2Dwidget.min.js'
+      }
     ]
   },
   /*
@@ -30,6 +35,7 @@ export default {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
+    '@/assets/icons/iconfont.css',
     '@/assets/css/reset.css',
     '@/assets/css/common.scss'
   ],
@@ -41,10 +47,16 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    {src:'@/plugins/element-ui', ssr:false },
-    {src:'@/plugins/nprogress', ssr:false },
-    {src:'@/plugins/axios', ssr:false }
+    {src:'@/plugins/element-ui', ssr:true },
+    {src:'@/plugins/nprogress', ssr:true },
+    {src:'@/plugins/axios', ssr:true }
   ],
+  axios: {
+    //开发模式下开启debug
+    debug: process.env.NODE_ENV == "production" ? false : true,
+    withCredentials: false,
+    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }
+  },
   /*
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components
@@ -62,12 +74,14 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/axios'
   ],
+  vender:[
+    'element-ui', 'axios'
+  ],
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
-    transpile: [/^element-ui/],
-    vendor: ['element-ui','axios'],
+    transpile: [/^element-ui/]
   }
 }
