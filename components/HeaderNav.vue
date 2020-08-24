@@ -54,7 +54,7 @@
 <script>
 import MyForm from "@/components/MyForm";
 import Format from "@/utils/format.js";
-import { baseURL } from "@/utils/index.js";
+import { baseURL } from "@/utils/index";
 export default {
   props: {
     positionValue: {

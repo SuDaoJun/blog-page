@@ -118,7 +118,7 @@ export default {
       this.motto = mottoArr[week]?mottoArr[week].title:'愿你成为自己喜欢的模样，不抱怨，不将就'
     },
     routerHome(){
-      this.$router.push({path: '/article'})
+      this.$router.push({path: '/'})
     },
     // 获取文章标签列表
     async getTagList(){
@@ -146,13 +146,13 @@ export default {
       this.linkList = res.data.data
     },
     sortClick(type){
-      this.$store.dispatch('operateFilterObj', {sortBy: type})
-      this.$router.push({path: '/article'})
+      this.$store.commit('changeFilterObj', {sortBy: type})
+      this.$router.push({path: '/'})
     },
     tagClick(id){
       let tags = id?id:''
-      this.$store.dispatch('operateFilterObj', {tags})
-      this.$router.push({path: '/article'})
+      this.$store.commit('changeFilterObj', {tags})
+      this.$router.push({path: '/'})
     }
   },
   computed: {

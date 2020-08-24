@@ -48,8 +48,9 @@ export default {
   */
   plugins: [
     {src:'@/plugins/element-ui', ssr:true },
-    {src:'@/plugins/nprogress', ssr:true },
-    {src:'@/plugins/axios', ssr:true }
+    {src:'@/plugins/nprogress', ssr:false },
+    {src:'@/plugins/axios', ssr:true },
+    {src:'@/plugins/commom', ssr:false },
   ],
   axios: {
     //开发模式下开启debug

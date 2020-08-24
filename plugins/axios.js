@@ -30,8 +30,10 @@ export default function ({ $axios, redirect, store }) {
     if((config.method === 'post' ||  config.method === 'put') && config.headers['Content-Type'] == "application/x-www-form-urlencoded;charset=UTF-8"){
         config.data=qs.stringify(config.data);
     }
-    if(sessionStorage.getItem('token')){
-      config.headers['Authorization'] = sessionStorage.getItem('token')
+    if (process.browser) {
+      if(sessionStorage.getItem('token')){
+        config.headers['Authorization'] = sessionStorage.getItem('token')
+      }
     }
     return config;
   });
