@@ -9,9 +9,9 @@
         路遥
       </div>
       <div class="info-intro">
-        <el-tooltip effect="dark" :content="motto" :disabled='motto.length < 22' placement="top">
+        <el-tooltip effect="dark" :content="objData.motto" :disabled='objData.motto.length < 22' placement="top">
           <div class="intro-motto">
-            {{motto}}
+            {{objData.motto}}
           </div>
         </el-tooltip>
       </div>
@@ -42,18 +42,18 @@
         文章标签
         <el-link type="primary" v-show='articleFilter.tags' class='all-article' :underline="false" @click.native='tagClick(false)'>全部文章</el-link>
       </div>
-      <tag-box :tagList='tagList' :showBorder='true' @tagClick='tagClick'></tag-box>
-      <div class="link-empty" v-if='tagList.length == 0'>
+      <tag-box :tagList='objData.tagList' :showBorder='true' @tagClick='tagClick'></tag-box>
+      <div class="link-empty" v-if='objData.tagList.length == 0'>
         暂无标签
       </div>
     </div>
     <div class="bar-tag">
       <div class="tag-title">友情链接</div>
       <div class="link-list">
-        <a :href='item.linkAddress' target="_blank" class="link-box" v-for='item in linkList' :key='item._id'>
+        <a :href='item.linkAddress' target="_blank" class="link-box" v-for='item in objData.linkList' :key='item._id'>
           {{item.name}}
         </a>
-        <div class="link-empty" v-if='linkList.length == 0'>
+        <div class="link-empty" v-if='objData.linkList.length == 0'>
           暂无链接
         </div>
       </div>
@@ -63,14 +63,23 @@
 
 <script>
 import TagBox from '@/components/TagBox'
-import moment from 'moment'
+
 
 export default {
-  props: {},
+  props: {
+    objData: {
+      type: Object,
+      default() {
+         return {
+           motto: '',
+           tagList: [],
+           linkList: []
+         }
+      }
+    }
+  },
   data() {
     return {
-      motto: '',
-      linkList: [],
       articleSort: [
         {
           name: '最新',
@@ -97,62 +106,31 @@ export default {
           type: 'meta.txtTotal',
           tagType: 'danger'
         }
-      ],
-      tagList: []
+      ]
     }
   },
   created(){
 
   },
   mounted() {
-    this.getMottoData()
-    this.getTagList()
-    this.getLinkList()
+
   },
   methods: {
-    // 获取励志语
-    async getMottoData(){
-      let res = await this.$axios.get('/blogPage/statement/list')
-      let mottoArr = res.data
-      let week = moment().day()
-      this.motto = mottoArr[week]?mottoArr[week].title:'愿你成为自己喜欢的模样，不抱怨，不将就'
-    },
     routerHome(){
-      this.$router.push({path: '/'})
-    },
-    // 获取文章标签列表
-    async getTagList(){
-      let res = await this.$axios.get('/blogPage/statistics/tagList')
-      let data = res.data
-      if(data.length > 0){
-        data.forEach(item => {
-          item.name = item._id.name
-          item.bgColor = item._id.bgColor
-          item._id = item._id.id
-        })
-      }
-      this.tagList = data
-    },
-    // 获取友情链接
-    async getLinkList(){
-      let res = await this.$axios.get('/blogPage/link/list', {
-        params: {
-          currentPage: '1',
-          pageSize: '99',
-          sortBy: 'createTime',
-          sortOrders: '1',
-        }
-      })
-      this.linkList = res.data.data
+      this.$router.push('/article/page');
     },
     sortClick(type){
       this.$store.commit('changeFilterObj', {sortBy: type})
-      this.$router.push({path: '/'})
+      if(this.$route.fullPath.indexOf('/article/page') == -1){
+        this.$router.push('/article/page');
+      }
     },
     tagClick(id){
       let tags = id?id:''
       this.$store.commit('changeFilterObj', {tags})
-      this.$router.push({path: '/'})
+      if(this.$route.fullPath.indexOf('/article/page') == -1){
+        this.$router.push('/article/page');
+      }
     }
   },
   computed: {

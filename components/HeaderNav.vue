@@ -80,22 +80,22 @@ export default {
     };
     return {
       baseURL: baseURL,
-      activeIndex: "article",
+      activeIndex: "article-page-num",
       submitLoad: false,
       menuList: [
         {
           name: "文章",
-          routeName: "article",
+          routeName: "article-page-num",
           icon: "el-icon-document"
         },
         {
           name: "归档",
-          routeName: "archive",
+          routeName: "article-archive",
           icon: "mio-icon-guidang iconfont"
         },
         {
           name: "项目",
-          routeName: "project",
+          routeName: "article-project",
           icon: "el-icon-tickets"
         },
         {
@@ -324,17 +324,18 @@ export default {
       this.activeIndex = name
     },
     routhHome(){
-      this.$router.push({path: '/article'})
+      this.$router.push({path: '/article/page'})
     },
     //  菜单点击
     handleSelect(index,indexPath) {
       this.activeIndex = index
-      if(index === 'article'){
-        this.$router.push({path: '/article'})
-      }else if(index === 'archive'){
+      console.log(index)
+      if(index === 'article-page-num'){
+        this.$router.push({path: '/article/page'})
+      }else if(index === 'article-archive'){
         this.$router.push({path: '/article/archive'})
-      }else if(index === 'project'){
-        this.$router.push({path: '/project'})
+      }else if(index === 'article-project'){
+        this.$router.push({path: '/article/project'})
       }else if(index === 'message'){
         this.$router.push({path: '/message'})
       }
