@@ -330,7 +330,9 @@ export default {
             linkArr.forEach((item) => {
               item.classList.remove('link-active')
             })
-            linkArr[i].classList.add('link-active')
+            if(linkArr[i]){
+              linkArr[i].classList.add('link-active')
+            }
             break;
           }
         }
@@ -534,11 +536,8 @@ export default {
       font-weight: 600;
       text-align: center;
     }
-    /deep/ .content-data{
+    .content-data{
       min-height: 50vh;
-      ol, ul, li{
-        list-style: inherit;
-      }
     }
     .content-header {
       margin-bottom: 40px;
