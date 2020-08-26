@@ -100,9 +100,7 @@ export default {
     return { articleList, total }
   },
   mounted() {
-    if(this.$route.params.num){
-      this.currentPage = this.$route.params.num?parseInt(this.$route.params.num):1
-    }
+    this.currentPage = this.$route.params.num?parseInt(this.$route.params.num):1
   },
   methods: {
     getDataList(){

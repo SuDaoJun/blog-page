@@ -58,7 +58,7 @@ export default {
     return { objData }
   },
   created() {
-    this.$router.push('/article/page');
+
   },
   mounted() {
 

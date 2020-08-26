@@ -62,7 +62,6 @@ export default {
 
   },
   mounted() {
-    
   },
   methods: {
     articleDetail(articleId){

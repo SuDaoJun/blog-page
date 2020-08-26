@@ -15,28 +15,28 @@ export default {
   },
   created() {
     if (process.browser) {
-      // setTimeout(() => {
-      //   window.L2Dwidget.init({
-      //     pluginRootPath: "/live2dw/",
-      //     pluginJsPath: "lib/",
-      //     pluginModelPath: `live2d-widget-model-shizuku/assets/`,
-      //     tagMode: false,
-      //     debug: false,
-      //     model: {
-      //       jsonPath: `/live2dw/live2d-widget-model-shizuku/assets/shizuku.model.json`
-      //     },
-      //     display: {
-      //       position: "right",
-      //       width: 220,
-      //       height: 400,
-      //       hOffset: 30,
-      //       vOffset: -45
-      //     },
-      //     react: { opacity: 0.7 },
-      //     mobile: { show: true },
-      //     log: false
-      //   });
-      // }, 400);
+      setTimeout(() => {
+        window.L2Dwidget.init({
+          pluginRootPath: "/live2dw/",
+          pluginJsPath: "lib/",
+          pluginModelPath: `live2d-widget-model-shizuku/assets/`,
+          tagMode: false,
+          debug: false,
+          model: {
+            jsonPath: `/live2dw/live2d-widget-model-shizuku/assets/shizuku.model.json`
+          },
+          display: {
+            position: "right",
+            width: 220,
+            height: 400,
+            hOffset: 30,
+            vOffset: -45
+          },
+          react: { opacity: 0.7 },
+          mobile: { show: true },
+          log: false
+        });
+      }, 400);
     }
   },
   mounted() {

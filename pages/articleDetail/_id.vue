@@ -232,7 +232,7 @@
 <script>
 import HeaderNav from "@/components/HeaderNav";
 import TagBox from "@/components/TagBox";
-import { catalogList, scrollAnimation, baseURL} from "@/utils/index";
+import { catalogList, scrollAnimation, baseURL } from "@/utils/index";
 import "@/assets/css/wangEnduit.css";
 import "@/assets/css/markdown.css";
 export default {
@@ -248,60 +248,65 @@ export default {
       baseURL: baseURL,
       navShow: true,
       articleId: "",
-      articleDetail: {
-        meta: {}
-      },
       operateId: '',
       tocList: "",
-      topCommentList: [],
-      commentList: [],
       linkTopArr: []
     };
   },
-  async asyncData({ $axios , params }) {
+  async asyncData({ $axios , params}) {
     let articleDetail = {
       meta: {}
     }
+    let topCommentList = []
+    let commentList = []
     if(params.id){
-      let articleRes = await $axios.get('/blogPage/article/detail', 
+      let res = await $axios.get('/blogPage/article/detail', 
         {
           params: {
             id: params.id
           }
-        }
-      )
-      
+      })
+      let commentRes = await $axios.get('/blogPage/comment/list', 
+        {
+          params: {
+            articleId: params.id,
+            currentPage: "1",
+            pageSize: "999",
+            status: "1",
+            sortBy: "createTime",
+            sortOrders: "-1"
+          }
+      })
+      let data = commentRes.data.data;
+      let topArr = [];
+      if (data.length > 0) {
+        data.forEach(item => {
+          item.expand = false
+          if (item.isTop) {
+            topArr.push(item);
+          }
+        });
+      }
+      topCommentList = topArr.length > 0?JSON.parse(JSON.stringify(topArr)):topArr;
+      commentList = data;
+      articleDetail = res.data
     }
-    return {  }
+    return { articleDetail, commentList, topCommentList}
   },
   created() {
   },
-  async mounted() {
-    if (this.$route.query.id) {
-      this.articleId = this.$route.query.id
-      await this.getArticleData()
-      this.getCommentList()
-      let linkArr = document.querySelectorAll(".rich-title")
-      let linkTopArr = []
-      if(linkArr.length > 0){
-        linkArr.forEach(item=>{
-          linkTopArr.push(item.offsetTop - 130)
-        })
-       linkTopArr.push(2 * linkTopArr[linkTopArr.length-1])
-       this.linkTopArr = linkTopArr
-      }
-      window.addEventListener('scroll', this.handleScroll, true)
-    }
+  mounted() {
+    this.initData() 
   },
   methods: {
     getArticleData() {
       let { articleId, userInfo } = this
       return new Promise((resolve, reject)=>{
-        this.$api.article
-        .articleDetail({
-          id: articleId
-        })
-        .then(res => {
+        this.$axios.get('/blogPage/article/detail',{
+          params: {
+            id: articleId
+          }
+        }).then(res => {
           let code = res.code;
           if (code === this.$constant.reqSuccess) {
             let data = res.data;
@@ -329,6 +334,41 @@ export default {
         })
       })
     },
+    initData(){
+      if (this.$route.params.id) {
+        this.articleId = this.$route.params.id
+        let data = this.articleDetail
+        let content = data.content
+        let contentData = catalogList(content);
+        this.tocList = contentData.tocList;
+        data.content = contentData.content;
+        this.articleDetail = data;
+        if (data.linkUser.length > 0 && this.userInfo) {
+          for (let i = 0; i < data.linkUser.length; i++) {
+            if (data.linkUser[i]._id == this.userInfo.id) {
+              this.isLike = true;
+              break;
+            } else {
+              this.isLike = false;
+            }
+          }
+        } else {
+          this.isLike = false;
+        }
+        this.$nextTick(()=>{
+          let linkArr = document.querySelectorAll(".rich-title")
+          let linkTopArr = []
+          if(linkArr.length > 0){
+            linkArr.forEach(item=>{
+              linkTopArr.push(item.offsetTop - 130)
+            })
+           linkTopArr.push(2 * linkTopArr[linkTopArr.length-1])
+           this.linkTopArr = linkTopArr
+          }
+          window.addEventListener('scroll', this.handleScroll, true)
+        })
+      }
+    },
     // 滚动监听
     handleScroll(){
       let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
@@ -343,7 +383,9 @@ export default {
             linkArr.forEach((item) => {
               item.classList.remove('link-active')
             })
-            linkArr[i].classList.add('link-active')
+            if(linkArr[i]){
+              linkArr[i].classList.add('link-active')
+            }
             break;
           }
         }
@@ -365,16 +407,16 @@ export default {
     // 获取评论列表
     getCommentList() {
       let { articleId } = this;
-      this.$api.article
-        .articleCommentList({
+      this.$axios.get('/blogPage/comment/list',{
+        params: {
           articleId,
           currentPage: "1",
           pageSize: "999",
           status: "1",
           sortBy: "createTime",
           sortOrders: "-1"
-        })
-        .then(res => {
+        }
+      }).then(res => {
           let data = res.data.data;
           let topArr = [];
           if (data.length > 0) {
@@ -407,12 +449,10 @@ export default {
     likeClick() {
       let { articleDetail, articleId, isLike, userInfo } = this;
       if (sessionStorage.getItem("token")) {
-        this.$api.article
-          .articleLike({
-            id: articleId,
-            type: isLike ? "0" : "1"
-          })
-          .then(res => {
+        this.$axios.put('/blogAdmin/article/like',{
+          id: articleId,
+          type: isLike ? "0" : "1"
+        }).then(res => {
             let code = res.code;
             if (code === this.$constant.reqSuccess) {
               if (this.isLike) {
@@ -432,7 +472,7 @@ export default {
             }
           });
       } else {
-        this.$store.dispatch("operateLoginModal");
+        this.$store.commit('changeLoginModal');
         this.$message.warning("登录才能点赞，请先登录");
       }
     },
@@ -442,12 +482,10 @@ export default {
       if (sessionStorage.getItem("token")) {
         if (commentTxt) {
           this.loadObj.commentLoad = true
-          this.$api.article
-            .articleComment({
-              articleId,
-              content: commentTxt
-            })
-            .then(res => {
+          this.$axios.post('/blogAdmin/comment/add',{
+            articleId,
+            content: commentTxt
+          }).then(res => {
               this.loadObj.commentLoad = false
               let code = res.code;
               if (code === this.$constant.reqSuccess) {
@@ -459,7 +497,7 @@ export default {
           this.$message.warning("评论内容不为空");
         }
       } else {
-        this.$store.dispatch("operateLoginModal");
+        this.$store.commit('changeLoginModal');
         this.$message.warning("登录才能评论，请先登录");
       }
     },
@@ -480,7 +518,7 @@ export default {
           },
           inputErrorMessage: '评论内容不为空'
         }).then(({ value }) => {
-          this.$api.article.replyCommentAdd({
+          this.$axios.post('/blogAdmin/replyComment/add', {
             articleId,
             commentId: type === 'sup'?item._id:item.commentId,
             toUser: type === 'sup'?item.createUser._id:item.replyUser._id,
@@ -496,7 +534,7 @@ export default {
         }).catch(() => {      
         })
       } else {
-        this.$store.dispatch("operateLoginModal");
+        this.$store.commit('changeLoginModal');
         this.$message.warning("登录才能回复评论，请先登录");
       }
     },
@@ -524,7 +562,7 @@ export default {
   },
   computed: {
     userInfo() {
-      return this.$store.getters.getUserInfo;
+      return this.$store.state.userInfo;
     }
   }
 };
@@ -538,7 +576,7 @@ export default {
   position: relative;
   display: flex;
   .detail-content {
-    flex: 1;
+    width: 945px;
     background-color: #fff;
     padding: 30px;
     .content-title {
@@ -685,7 +723,7 @@ export default {
     }
   }
   /deep/ .detail-tocList {
-    width: 300px;
+    width: 240px;
     height: 100%;
     margin-left: 30px;
     margin-top: 230px;

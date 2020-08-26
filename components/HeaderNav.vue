@@ -246,15 +246,13 @@ export default {
       this.$refs["registerRef"].$refs["registerRef"].validate(valid => {
         if (valid) {
           this.submitLoad = true
-          this.$api.user
-            .register({
-              email: formModel.email,
-              name: formModel.name,
-              phone: formModel.phone,
-              password: formModel.password,
-              type: 'pageUser'
-            })
-            .then(res => {
+          this.$axios.post('/blogAdmin/user/register',{
+            email: formModel.email,
+            name: formModel.name,
+            phone: formModel.phone,
+            password: formModel.password,
+            type: 'pageUser'
+          }).then(res => {
               this.submitLoad = false
               let code = res.code;
               if (code === this.$constant.reqSuccess) {
@@ -280,12 +278,10 @@ export default {
       this.$refs["loginRef"].$refs["loginRef"].validate(valid => {
         if (valid) {
           this.submitLoad = true
-          this.$api.user
-            .login({
-              name: formModel.name,
-              password: formModel.password
-            })
-            .then(res => {
+          this.$axios.post('/blogPage/user/login',{
+            name: formModel.name,
+            password: formModel.password
+          }).then(res => {
               this.submitLoad = false
               let code = res.code;
               if (code === this.$constant.reqSuccess) {
@@ -318,8 +314,8 @@ export default {
     },
     // 获取当前高亮导航
     getNavCurrent(name){
-      if(name === 'articleDetail'){
-        name = 'article'
+      if(name === 'articleDetail-id'){
+        name = 'article-page-num'
       }
       this.activeIndex = name
     },
@@ -329,7 +325,6 @@ export default {
     //  菜单点击
     handleSelect(index,indexPath) {
       this.activeIndex = index
-      console.log(index)
       if(index === 'article-page-num'){
         this.$router.push({path: '/article/page'})
       }else if(index === 'article-archive'){

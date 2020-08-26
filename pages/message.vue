@@ -4,7 +4,7 @@
      <div class="message-box">
        <div class="box-header" @click='addMessage'></div>
        <div class="box-refresh el-icon-refresh" :class="{'refresh-active': refreshLoading}" @click='refreshMessage'></div>
-       <div class="box-item" v-for='item in messageList' :key='item._id' :style="item.style" @mousedown.prevent="mousedown">
+       <div class="box-item" v-for='item in messageList' :key='item._id' :style="item.style" @mousedown.prevent="mousedown" v-show='initData'>
          <div class="item-header" :style="{backgroundImage: `url(${require(`@/assets/img/note${item.bg}_1.png`)})`}">{{item.createTime.split(' ')[0]}}</div>
          <div class="item-body" :style="{backgroundImage: `url(${require(`@/assets/img/note${item.bg}_2.png`)})`}">{{item.content}}</div>
          <div class="item-footer" :style="{backgroundImage: `url(${require(`@/assets/img/note${item.bg}_3.png`)})`}">
@@ -34,9 +34,9 @@ import { randNumber, baseURL } from "@/utils/index";
 export default {
   data() {
     return {
+      initData: false,
       baseURL: baseURL,
       refreshLoading: false,
-      messageList: [],
       isDrag: false,
       dragObj: null,
       dragMouseOffset: {
@@ -59,6 +59,24 @@ export default {
       }
     }
   },
+  async asyncData({ $axios }) {
+    let res = await $axios.get('/blogPage/statistics/randomMessage',{
+      params: {
+        num: 10
+      }
+    })
+    let messageList = res.data
+    if(messageList.length > 0){
+      messageList.forEach(item=>{
+        item.style = {
+            left: `${randNumber(0, 1685)}px`,
+            top: `${randNumber(60, 702)}px`
+        }
+        item.bg = randNumber(1, 6)
+      })
+    }
+    return { messageList }
+  },
   created() {
 
   },
@@ -72,7 +90,12 @@ export default {
         x: doc.clientWidth - 235,
         y: doc.clientHeight - 235
     }
-    this.getMessages()
+    let data = this.messageList
+    if(data.length > 0){
+      data = data.map(item => this.formatStyleByMessage(item))
+    }
+    this.messageList = data
+    this.initData = true
   },
   methods: {
     // 获取随机留言
@@ -83,7 +106,6 @@ export default {
             num: 10
           }
         }).then(res=>{
-          console.log(res)
           let data = res.data
           if(data.length > 0){
             data = data.map(item => this.formatStyleByMessage(item))
@@ -112,7 +134,7 @@ export default {
               instance.confirmButtonLoading = true;
               instance.confirmButtonText = '提交中...';
               let value = instance.$refs.input.value
-              this.$api.message.messageAdd({
+              this.$axios.post('/blogPage/message/add', {
                 content: value
               }).then((res)=>{
                 console.log(res)
@@ -136,7 +158,7 @@ export default {
         }).catch(() => {      
         })
       } else {
-        this.$store.dispatch("operateLoginModal");
+        this.$store.commit('changeLoginModal')
         this.$message.warning("登录才能留言，请先登录");
       }
     },

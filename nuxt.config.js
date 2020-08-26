@@ -30,6 +30,7 @@ export default {
       }
     ]
   },
+  loading: false,
   /*
   ** Global CSS
   */

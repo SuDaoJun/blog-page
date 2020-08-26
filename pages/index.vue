@@ -11,7 +11,7 @@ export default {
     }
   },
   created() {
-    this.$router.push('/article');
+    this.$router.push('/article/page');
   },
   mounted() {
 

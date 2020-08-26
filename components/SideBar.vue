@@ -121,16 +121,12 @@ export default {
     },
     sortClick(type){
       this.$store.commit('changeFilterObj', {sortBy: type})
-      if(this.$route.fullPath.indexOf('/article/page') == -1){
-        this.$router.push('/article/page');
-      }
+      this.$router.push('/article/page');
     },
     tagClick(id){
       let tags = id?id:''
       this.$store.commit('changeFilterObj', {tags})
-      if(this.$route.fullPath.indexOf('/article/page') == -1){
-        this.$router.push('/article/page');
-      }
+      this.$router.push('/article/page');
     }
   },
   computed: {
