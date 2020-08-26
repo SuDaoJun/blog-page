@@ -525,7 +525,7 @@ export default {
   position: relative;
   display: flex;
   .detail-content {
-    flex: 1;
+    width: 945px;
     background-color: #fff;
     padding: 30px;
     .content-title {
@@ -672,7 +672,7 @@ export default {
     }
   }
   /deep/ .detail-tocList {
-    width: 300px;
+    width: 240px;
     height: 100%;
     margin-left: 30px;
     margin-top: 230px;
