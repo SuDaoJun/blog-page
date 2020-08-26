@@ -40,6 +40,20 @@ export default {
       baseURL: baseURL
     }
   },
+  head(){
+    return {
+      title: '前端项目-博客',
+      meta: [{
+        hid: "description",
+        name: "description",
+        content: "前端项目"
+      },{
+        hid: 'keywords',
+        name: 'keywords',
+        content: '前端项目'
+      }]
+    }
+  },
   async asyncData({ $axios }) {
     const res = await $axios.get('/blogPage/project/list',{
       params: {

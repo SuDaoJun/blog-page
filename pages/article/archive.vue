@@ -27,6 +27,20 @@ export default {
     return {
     }
   },
+  head(){
+    return {
+      title: '文章归档-博客',
+      meta: [{
+        hid: "description",
+        name: "description",
+        content: "文章归档"
+      },{
+        hid: 'keywords',
+        name: 'keywords',
+        content: '文章归档'
+      }]
+    }
+  },
   async asyncData({ $axios }) {
     const res = await $axios.get('/blogPage/statistics/articleArchive')
     let total = res.data.length

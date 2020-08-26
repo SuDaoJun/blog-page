@@ -59,6 +59,20 @@ export default {
       }
     }
   },
+  head(){
+    return {
+      title: '留言-博客',
+      meta: [{
+        hid: "description",
+        name: "description",
+        content: "留言"
+      },{
+        hid: 'keywords',
+        name: 'keywords',
+        content: '留言'
+      }]
+    }
+  },
   async asyncData({ $axios }) {
     let res = await $axios.get('/blogPage/statistics/randomMessage',{
       params: {

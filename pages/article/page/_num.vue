@@ -80,6 +80,20 @@ export default {
       currentPage: 1
     }
   },
+  head(){
+    return {
+      title: '文章列表-博客',
+      meta: [{
+        hid: "description",
+        name: "description",
+        content: "前端文章"
+      },{
+        hid: 'keywords',
+        name: 'keywords',
+        content: '前端文章'
+      }]
+    }
+  },
   created() {
 
   },

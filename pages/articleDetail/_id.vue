@@ -253,6 +253,20 @@ export default {
       linkTopArr: []
     };
   },
+  head(){
+    return {
+      title: '文章详情-博客',
+      meta: [{
+        hid: "description",
+        name: "description",
+        content: "文章详情"
+      },{
+        hid: 'keywords',
+        name: 'keywords',
+        content: '文章详情'
+      }]
+    }
+  },
   async asyncData({ $axios , params}) {
     let articleDetail = {
       meta: {}
