@@ -534,8 +534,11 @@ export default {
       font-weight: 600;
       text-align: center;
     }
-    .content-data{
+    /deep/ .content-data{
       min-height: 50vh;
+      ol, ul, li{
+        list-style: inherit;
+      }
     }
     .content-header {
       margin-bottom: 40px;
