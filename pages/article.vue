@@ -8,7 +8,7 @@
       <side-bar :objData='objData'></side-bar>
     </div>
     <div class="wrapper-footer">
-      <a href="http://www.beian.miit.gov.cn/">æ¹˜ICPå¤‡20010588å�·</a>
+      <a href="https://www.beian.miit.gov.cn/">æ¹˜ICPå¤‡20010588å�·</a>
     </div>
   </div>
 </template>

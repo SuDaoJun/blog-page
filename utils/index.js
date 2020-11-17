@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { Message } from "element-ui";
 
-export let baseURL = process.env.NODE_ENV == 'development'?'http://localhost:3000':'http://sdjBlog.cn:3000'
+export let baseURL = process.env.NODE_ENV == 'development'?'http://localhost:3000':'https://sdjBlog.cn:8090'
 
 // 常量数据
 export let constant = {
