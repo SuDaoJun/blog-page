@@ -1,0 +1,30 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}
+  ],
+  "easycom": {
+    "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+  },
+	"globalStyle": {
+    "navigationStyle": "custom" ,
+		"navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#303133",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [{
+        "pagePath": "pages/index/index",
+        "iconPath": "static/img/home.png",
+        "selectedIconPath": "static/img/home_select.png",
+        "text": "首页"
+      }
+    ]
+  }
+}
