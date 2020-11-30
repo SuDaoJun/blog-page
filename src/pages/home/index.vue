@@ -1,5 +1,5 @@
 <template>
-	<view class="index-content">
+	<view class="index">
 
 	</view>
 </template>

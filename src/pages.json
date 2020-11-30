@@ -1,30 +1,67 @@
 {
 	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/home/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/classify/index",
+			"style": {
+				"navigationBarTitleText": "分类"
+			}
+		},
+		{
+			"path": "pages/message/index",
+			"style": {
+				"navigationBarTitleText": "留言"
+			}
+		},
+		{
+			"path": "pages/person/index",
+			"style": {
+				"navigationBarTitleText": "我的"
 			}
 		}
-  ],
-  "easycom": {
-    "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
-  },
+	],
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
 	"globalStyle": {
-    "navigationStyle": "custom" ,
+		"navigationStyle": "custom",
 		"navigationBarTextStyle": "white"
-  },
-  "tabBar": {
-    "color": "#909399",
-    "selectedColor": "#303133",
-    "backgroundColor": "#FFFFFF",
-    "borderStyle": "black",
-    "list": [{
-        "pagePath": "pages/index/index",
-        "iconPath": "static/img/home.png",
-        "selectedIconPath": "static/img/home_select.png",
-        "text": "首页"
+	},
+	"tabBar": {
+		"color": "#808080",
+		"selectedColor": "#5098FF",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/img/tabbar/home.png",
+				"selectedIconPath": "static/img/tabbar/home_select.png",
+				"text": "首页"
+      },
+      {
+        "pagePath": "pages/classify/index",
+        "iconPath": "static/img/tabbar/classify.png",
+        "selectedIconPath": "static/img/tabbar/classify_select.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/message/index",
+        "iconPath": "static/img/tabbar/message.png",
+        "selectedIconPath": "static/img/tabbar/message_select.png",
+        "text": "留言"
+      },
+      {
+        "pagePath": "pages/person/index",
+        "iconPath": "static/img/tabbar/person.png",
+        "selectedIconPath": "static/img/tabbar/person_select.png",
+        "text": "我的"
       }
-    ]
-  }
+		]
+	}
 }
