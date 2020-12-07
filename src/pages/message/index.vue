@@ -1,5 +1,5 @@
 <template>
-  <div class="index">message</div>
+  <view class="index">message</view>
 </template>
 
 <script>
@@ -34,4 +34,4 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

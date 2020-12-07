@@ -1,5 +1,5 @@
 <template>
-  <div class="index">classify</div>
+  <view class="index">classify</view>
 </template>
 
 <script>
@@ -34,4 +34,4 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>
