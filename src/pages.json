@@ -3,7 +3,9 @@
 		{
 			"path": "pages/home/index",
 			"style": {
-				"navigationBarTitleText": "路遥博客"
+        "navigationBarTitleText": "路遥博客",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 126
 			}
 		},
 		{
@@ -22,6 +24,30 @@
 			"path": "pages/person/index",
 			"style": {
 				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/home/articlePeace",
+			"style": {
+				"navigationBarTitleText": "文章排行"
+			}
+		},
+		{
+			"path": "pages/home/answer",
+			"style": {
+				"navigationBarTitleText": "answer"
+			}
+		},
+		{
+			"path": "pages/home/view",
+			"style": {
+				"navigationBarTitleText": "view"
+			}
+		},
+		{
+			"path": "pages/home/search",
+			"style": {
+				"navigationBarTitleText": "search"
 			}
 		}
 	],
@@ -43,25 +69,25 @@
 				"iconPath": "static/img/tabbar/home.png",
 				"selectedIconPath": "static/img/tabbar/home_select.png",
 				"text": "首页"
-      },
-      {
-        "pagePath": "pages/classify/index",
-        "iconPath": "static/img/tabbar/classify.png",
-        "selectedIconPath": "static/img/tabbar/classify_select.png",
-        "text": "分类"
-      },
-      {
-        "pagePath": "pages/message/index",
-        "iconPath": "static/img/tabbar/message.png",
-        "selectedIconPath": "static/img/tabbar/message_select.png",
-        "text": "留言"
-      },
-      {
-        "pagePath": "pages/person/index",
-        "iconPath": "static/img/tabbar/person.png",
-        "selectedIconPath": "static/img/tabbar/person_select.png",
-        "text": "我的"
-      }
+			},
+			{
+				"pagePath": "pages/classify/index",
+				"iconPath": "static/img/tabbar/classify.png",
+				"selectedIconPath": "static/img/tabbar/classify_select.png",
+				"text": "分类"
+			},
+			{
+				"pagePath": "pages/message/index",
+				"iconPath": "static/img/tabbar/message.png",
+				"selectedIconPath": "static/img/tabbar/message_select.png",
+				"text": "留言"
+			},
+			{
+				"pagePath": "pages/person/index",
+				"iconPath": "static/img/tabbar/person.png",
+				"selectedIconPath": "static/img/tabbar/person_select.png",
+				"text": "我的"
+			}
 		]
 	}
 }
