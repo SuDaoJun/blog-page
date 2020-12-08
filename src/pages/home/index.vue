@@ -1,8 +1,25 @@
 <template>
   <view class="index-home">
-    <nav-header title='路遥博客'></nav-header>
+    <nav-header title='路遥博客' :borderBottom='false'></nav-header>
     <view class="home-swiper">
-      <u-swiper :list="swiperList" :title='true' mode='dot' height='360' :border-radius='0' img-mode='scaleToFill'></u-swiper>
+      <u-swiper :list="swiperList" :title='true' :title-style='titleStyle' mode='dot' height='360' :border-radius='0' img-mode='aspectFill'></u-swiper>
+    </view>
+    <view class='home-type'>
+      <view class="box-item" v-for='item in typeList' :key='item.title' @click="routePath(item.path)">
+        <view class="item-icon">
+          <u-icon :name="item.iconObj.name" custom-prefix="custom-icon" :size="item.iconObj.size" :color="item.iconObj.color"></u-icon>
+        </view>
+        <text>{{item.title}}</text>
+      </view>
+    </view>
+    <view class='home-search'>
+      <u-search shape="round" :clearabled="true" maxlength='20' placeholder="文章搜索..." v-model="keywordSearch" @custom='articleSearch' @search='articleSearch'></u-search>
+    </view>
+    <view class="home-article">
+      <view class="item u-border-bottom" v-for="(item, index) in articleList" :key="index">
+        {{'第' + item + '条数据'}}
+      </view>
+      <u-loadmore :status="pageObj.pageStatus" />
     </view>
   </view>
 </template>
@@ -12,7 +29,45 @@ import { baseURL} from '@/utils'
 export default {
   components: {},
   data: () => ({
-    swiperList: []
+    swiperList: [],
+    titleStyle: {
+      textAlign: 'center'
+    },
+    typeList: [
+      {
+        title: '文章排行',
+        path: '/pages/home/articlePeace',
+        iconObj: {
+          name: 'icon--scrm-53',
+          size: '80',
+          color: '#3B8EE8'
+        }
+      },
+      {
+        title: '我的答案',
+        path: '/pages/home/answer',
+        iconObj: {
+          name: 'icon--scrm-49',
+          size: '80',
+          color: '#5078AA'
+        }
+      },
+      {
+        title: '每日一看',
+        path: '/pages/home/view',
+        iconObj: {
+          name: 'icon--scrm-50',
+          size: '80',
+          color: '#EE8848'
+        }
+      }
+    ],
+    keywordSearch: '',
+    articleList: [],
+    pageObj: {
+      pageSize: 1,
+      pageStatus: 'loadmore'
+    }
   }),
   computed: {},
   methods: {
@@ -30,6 +85,21 @@ export default {
           item.image = `${baseURL}/blogAdmin/file/down?downId=${item.imgId}`
         })
         this.swiperList = dataList;
+      }
+    },
+    // 路由列表跳转
+    routePath(path){
+      this.$u.routePath.navigateTo(path);
+    },
+    // 文章搜索
+    articleSearch(){
+      let keywordSearch = this.keywordSearch;
+      if(keywordSearch){
+        this.$u.routePath.navigateTo('/pages/home/search', {
+          keyword: this.keywordSearch
+        });
+      }else{
+        this.$u.toast('请输入内容');
       }
     }
   },
@@ -50,9 +120,12 @@ export default {
   // 页面处理函数--监听用户下拉动作
   onPullDownRefresh() {
     uni.stopPullDownRefresh();
+    console.info('123123')
   },
   // 页面处理函数--监听用户上拉触底
-  onReachBottom() {},
+  onReachBottom() {
+    console.info('123123')
+  },
   // 页面处理函数--监听页面滚动(not-nvue)
   /* onPageScroll(event) {}, */
   // 页面处理函数--用户点击右上角分享
@@ -61,7 +134,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home-swiper{
-  margin-top: 10rpx;
+.home-type{
+  margin-top: 20rpx;
+  padding: 20rpx 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .box-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .item-icon{
+      width: 80rpx;
+      height: 80rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    text{
+      letter-spacing: 2rpx;
+      color: #999;
+    }
+  }
+}
+.home-search{
+  background-color: #fff;
+  margin: 20rpx 0;
+  padding: 20rpx 20rpx;
+}
+.home-article{
+  
 }
 </style>
