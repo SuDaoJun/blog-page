@@ -2,7 +2,7 @@
   <view class="index-home">
     <nav-header title='路遥博客' :borderBottom='false'></nav-header>
     <view class="home-swiper">
-      <u-swiper :list="swiperList" :title='true' :title-style='titleStyle' mode='dot' height='360' :border-radius='0' img-mode='aspectFill'></u-swiper>
+      <u-swiper :list="swiperList" :title='true' :title-style='titleStyle' mode='dot' :height='360' :border-radius='0' img-mode='aspectFill'></u-swiper>
     </view>
     <view class='home-type'>
       <view class="box-item" v-for='item in typeList' :key='item.title' @click="routePath(item.path)">
@@ -16,10 +16,15 @@
       <u-search shape="round" :clearabled="true" maxlength='20' placeholder="文章搜索..." v-model="keywordSearch" @custom='articleSearch' @search='articleSearch'></u-search>
     </view>
     <view class="home-article">
-      <view class="item u-border-bottom" v-for="(item, index) in articleList" :key="index">
-        {{'第' + item + '条数据'}}
+      <view class="article-item u-border-bottom" v-for="(item, index) in articleList" :key="item._id">
+        <view class="item-img">
+          <u-image  mode="scaleToFill" :height='128' :src="item.image"></u-image>
+        </view>
+        <view class="item-box">
+          <view class='box-title'>{{item.title}}</view>
+        </view>
       </view>
-      <u-loadmore :status="pageObj.pageStatus" />
+      <u-loadmore :status="pageObj.pageStatus" :load-text="loadText" @loadmore='initListArticle' margin-top='30' margin-bottom='30' />
     </view>
   </view>
 </template>
@@ -67,6 +72,11 @@ export default {
     pageObj: {
       pageSize: 1,
       pageStatus: 'loadmore'
+    },
+    loadText: {
+      loadmore: '点击或上拉加载更多',
+      loading: '正在加载...',
+      nomore: '没有更多了'
     }
   }),
   computed: {},
@@ -85,6 +95,30 @@ export default {
           item.image = `${baseURL}/blogAdmin/file/down?downId=${item.imgId}`
         })
         this.swiperList = dataList;
+      }
+    },
+    // 文章列表
+    async initListArticle(){
+      let pageObj = this.pageObj;
+      pageObj.pageStatus = 'loading';
+      let result = await this.$u.api.article.articleList({
+        currentPage: pageObj.pageSize,
+        pageSize: 5
+      })
+      pageObj.pageSize = pageObj.pageSize + 1;
+      let dataList = result.data.data;
+      if(dataList.length > 0){
+        dataList.forEach(item=>{
+          item.image = `${baseURL}/blogAdmin/file/down?downId=${item.imgId}`
+        })
+        this.articleList = this.articleList.concat(dataList);
+        if(this.articleList.length == result.data.count){
+          pageObj.pageStatus = 'nomore';
+        }else{
+          pageObj.pageStatus = 'loadmore';
+        }
+      }else{
+        pageObj.pageStatus = 'nomore';
       }
     },
     // 路由列表跳转
@@ -108,6 +142,7 @@ export default {
   // 页面周期函数--监听页面加载
   onLoad() {
     this.initSwiperArticle();
+    this.initListArticle();
   },
   // 页面周期函数--监听页面初次渲染完成
   onReady() {},
@@ -120,11 +155,12 @@ export default {
   // 页面处理函数--监听用户下拉动作
   onPullDownRefresh() {
     uni.stopPullDownRefresh();
-    console.info('123123')
   },
   // 页面处理函数--监听用户上拉触底
   onReachBottom() {
-    console.info('123123')
+    if(this.pageObj.pageStatus == 'loadmore'){
+      // this.initListArticle();
+    }
   },
   // 页面处理函数--监听页面滚动(not-nvue)
   /* onPageScroll(event) {}, */
@@ -164,6 +200,18 @@ export default {
   padding: 20rpx 20rpx;
 }
 .home-article{
-  
+  .article-item{
+    background-color: #fff;
+    padding: 20rpx 30rpx;
+    display: flex;
+    .item-img{
+      width: 200rpx;
+      height: 128rpx;
+      margin-right: 30rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 </style>
