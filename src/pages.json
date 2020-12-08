@@ -4,8 +4,7 @@
 			"path": "pages/home/index",
 			"style": {
         "navigationBarTitleText": "路遥博客",
-        "enablePullDownRefresh": true,
-        "onReachBottomDistance": 126
+        "onReachBottomDistance": 300
 			}
 		},
 		{
