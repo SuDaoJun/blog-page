@@ -1,6 +1,6 @@
 <template>
   <view class="nav-header">
-    <u-navbar :back-text='backText' :is-back="isBack" :title="title" :background="background" :title-color='titleColor' :back-icon-color='backIconColor' :back-text-style='backTextColor'>
+    <u-navbar :back-text='backText' :is-back="isBack" :title="title" :background="background" :title-color='titleColor' :back-icon-color='backIconColor' :back-text-style='backTextColor' :border-bottom='borderBottom'>
       <view class="slot-right" slot='right' v-if='rightSlot'>
         
       </view>
@@ -39,6 +39,10 @@ export default {
     rightSlot: {
       type: Boolean,
       default: false
+    },
+    borderBottom: {
+      type: Boolean,
+      default: true
     },
     backTextColor: {
       type: Object,
