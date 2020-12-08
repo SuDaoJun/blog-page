@@ -35,7 +35,7 @@
       delta: delta
     })
   }
-  vm.$u.route = {redirectTo, navigateTo, navigateBack, reLaunch, switchTab}
+  vm.$u.routePath = {redirectTo, navigateTo, navigateBack, reLaunch, switchTab}
 }
 
 export default {
