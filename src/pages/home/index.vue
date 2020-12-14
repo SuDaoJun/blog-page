@@ -15,24 +15,18 @@
     <view class='home-search'>
       <u-search shape="round" :clearabled="true" maxlength='20' placeholder="文章搜索..." v-model="keywordSearch" @custom='articleSearch' @search='articleSearch'></u-search>
     </view>
-    <view class="home-article">
-      <view class="article-item u-border-bottom" v-for="(item, index) in articleList" :key="item._id">
-        <view class="item-img">
-          <u-image  mode="scaleToFill" :height='128' :src="item.image"></u-image>
-        </view>
-        <view class="item-box">
-          <view class='box-title'>{{item.title}}</view>
-        </view>
-      </view>
-      <u-loadmore :status="pageObj.pageStatus" :load-text="loadText" @loadmore='initListArticle' margin-top='30' margin-bottom='30' />
-    </view>
+    <article-list :articleList='articleList' :status='pageObj.pageStatus' @loadmore='initListArticle'></article-list>
+    <u-back-top :scroll-top="scrollTop" :duration='200'></u-back-top>
   </view>
 </template>
 
 <script>
-import { baseURL} from '@/utils'
+import { baseURL } from '@/utils'
+import ArticleList from '@/components/ArticleList'
 export default {
-  components: {},
+  components: {
+    ArticleList
+  },
   data: () => ({
     swiperList: [],
     titleStyle: {
@@ -40,7 +34,7 @@ export default {
     },
     typeList: [
       {
-        title: '文章排行',
+        title: '排行',
         path: '/pages/home/articlePeace',
         iconObj: {
           name: 'icon--scrm-53',
@@ -49,7 +43,7 @@ export default {
         }
       },
       {
-        title: '我的答案',
+        title: '答案',
         path: '/pages/home/answer',
         iconObj: {
           name: 'icon--scrm-49',
@@ -58,7 +52,7 @@ export default {
         }
       },
       {
-        title: '每日一看',
+        title: '看看',
         path: '/pages/home/view',
         iconObj: {
           name: 'icon--scrm-50',
@@ -73,11 +67,7 @@ export default {
       pageSize: 1,
       pageStatus: 'loadmore'
     },
-    loadText: {
-      loadmore: '点击或上拉加载更多',
-      loading: '正在加载...',
-      nomore: '没有更多了'
-    }
+    scrollTop: 0
   }),
   computed: {},
   methods: {
@@ -103,13 +93,14 @@ export default {
       pageObj.pageStatus = 'loading';
       let result = await this.$u.api.article.articleList({
         currentPage: pageObj.pageSize,
-        pageSize: 5
+        pageSize: 10
       })
       pageObj.pageSize = pageObj.pageSize + 1;
       let dataList = result.data.data;
       if(dataList.length > 0){
         dataList.forEach(item=>{
-          item.image = `${baseURL}/blogAdmin/file/down?downId=${item.imgId}`
+          item.image = `${baseURL}/blogAdmin/file/down?downId=${item.imgId}`;
+          item.createTime = item.createTime.split(' ')[0];
         })
         this.articleList = this.articleList.concat(dataList);
         if(this.articleList.length == result.data.count){
@@ -159,11 +150,13 @@ export default {
   // 页面处理函数--监听用户上拉触底
   onReachBottom() {
     if(this.pageObj.pageStatus == 'loadmore'){
-      // this.initListArticle();
+      this.initListArticle();
     }
   },
   // 页面处理函数--监听页面滚动(not-nvue)
-  /* onPageScroll(event) {}, */
+  onPageScroll(event) {
+    this.scrollTop = event.scrollTop;
+  },
   // 页面处理函数--用户点击右上角分享
   /* onShareAppMessage(options) {}, */
 };
@@ -198,20 +191,5 @@ export default {
   background-color: #fff;
   margin: 20rpx 0;
   padding: 20rpx 20rpx;
-}
-.home-article{
-  .article-item{
-    background-color: #fff;
-    padding: 20rpx 30rpx;
-    display: flex;
-    .item-img{
-      width: 200rpx;
-      height: 128rpx;
-      margin-right: 30rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
 }
 </style>
