@@ -4,7 +4,7 @@
 			"path": "pages/home/index",
 			"style": {
         "navigationBarTitleText": "路遥博客",
-        "onReachBottomDistance": 300
+        "onReachBottomDistance": 100
 			}
 		},
 		{
@@ -46,7 +46,8 @@
 		{
 			"path": "pages/home/search",
 			"style": {
-				"navigationBarTitleText": "search"
+        "navigationBarTitleText": "文章搜索",
+        "onReachBottomDistance": 100
 			}
 		}
 	],
