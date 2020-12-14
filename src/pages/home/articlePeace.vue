@@ -1,5 +1,7 @@
 <template>
-  <view class="article-peace">article-peace</view>
+  <view class="article-peace">
+    
+  </view>
 </template>
 
 <script>
