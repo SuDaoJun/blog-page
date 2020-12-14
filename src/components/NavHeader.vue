@@ -1,6 +1,11 @@
 <template>
   <view class="nav-header">
     <u-navbar :back-text='backText' :is-back="isBack" :title="title" :background="background" :title-color='titleColor' :back-icon-color='backIconColor' :back-text-style='backTextColor' :border-bottom='borderBottom'>
+      <view class="slot-wrap" v-if="useSlot">
+        <view class="search-wrap">
+          <u-search v-model="value" :clearabled="true" maxlength='20' :placeholder="placeholder" :show-action="showAction" height="56" :action-style="{color: '#fff'}" @search="handleSearch" @custom="handleSearch"></u-search>
+        </view>
+      </view>
       <view class="slot-right" slot='right' v-if='rightSlot'>
         
       </view>
@@ -14,11 +19,27 @@ export default {
   props: {
     backText: {
       type: String,
-      default: '返回'
+      default: ''
     },
     title: {
       type: String,
       default: ''
+    },
+    useSlot: {
+      type: Boolean,
+      default: false
+    },
+    keyword: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: '文章搜索'
+    },
+    showAction: {
+      type: Boolean,
+      default: true
     },
     titleColor: {
       type: String,
@@ -61,13 +82,23 @@ export default {
       }
     }
   },
-  data: () => ({}),
+  data: () => ({
+    value: ''
+  }),
   computed: {},
-  methods: {},
-  watch: {},
+  methods: {
+    handleSearch: function(value){
+      this.$emit('handleSearch', value)
+    }
+  },
+  watch: {
+
+  },
 
   // 组件周期函数--监听组件挂载完毕
-  mounted() {},
+  mounted() {
+    this.value = this.keyword;
+  },
   // 组件周期函数--监听组件数据更新之前
   beforeUpdate() {},
   // 组件周期函数--监听组件数据更新之后
@@ -82,6 +113,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .slot-wrap {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    .search-wrap {
+      margin: 0 20rpx 0 60rpx;
+      flex: 1;
+    }
+  }
   .slot-right{
     padding-right: 24rpx;
     color: #fff;
