@@ -118,7 +118,7 @@ export default {
     align-items: center;
     flex: 1;
     .search-wrap {
-      margin: 0 20rpx 0 60rpx;
+      margin: 0 20rpx;
       flex: 1;
     }
   }
