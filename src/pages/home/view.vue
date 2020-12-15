@@ -1,14 +1,31 @@
 <template>
-  <view class="view">view</view>
+  <view class="index-view">
+    <nav-header :isBack='true' title='每日一看'></nav-header>
+    <view class="view-banner">
+      <u-image width="100%" height="360rpx" mode='scaleToFill' :src="bannerBg"></u-image>
+    </view>
+    <view class="view-txt">{{articleObj.title}}</view>
+    <view class="view-btn">
+      <u-button type='warning' :loading='loading' @click='articleResult'>每日一看</u-button>
+    </view>
+  </view>
 </template>
 
 <script>
-
+import { bannerBg} from '@/utils'
 export default {
   components: {},
-  data: () => ({}),
+  data: () => ({
+    bannerBg: bannerBg,
+    loading: false,
+    articleObj: {}
+  }),
   computed: {},
-  methods: {},
+  methods: {
+    articleResult(){
+
+    }
+  },
   watch: {},
 
   // 页面周期函数--监听页面加载
@@ -34,4 +51,16 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.view-txt{
+  text-align: center;
+  padding: 0 40rpx;
+  font-size: 32rpx;
+  letter-spacing: 2rpx;
+  margin: 40rpx 0;
+  color: #007aff;
+}
+.view-btn{
+  padding: 0 40rpx;
+}
+</style>
