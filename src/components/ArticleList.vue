@@ -83,6 +83,7 @@ export default {
 
 <style lang="scss">
 .home-article{
+  padding-bottom: 2rpx;
   .article-item{
     background-color: #fff;
     padding: 15rpx 30rpx;
