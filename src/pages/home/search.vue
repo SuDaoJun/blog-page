@@ -2,7 +2,7 @@
   <view class="index-search">
     <nav-header :isBack='true' :borderBottom='false' :useSlot='true' :keyword='keyword' @handleSearch='handleSearch'></nav-header>
     <view class="search-banner">
-      <u-image width="100%" height="360rpx" mode='scaleToFill' src="https://s3.ax1x.com/2020/12/07/DzKA7q.jpg"></u-image>
+      <u-image width="100%" height="360rpx" mode='scaleToFill' :src="bannerBg"></u-image>
       <view class="banner-txt">
         搜索关键字：{{keyword || '无'}}
       </view>
@@ -13,13 +13,14 @@
 </template>
 
 <script>
-import { baseURL } from '@/utils'
+import { baseURL, bannerBg } from '@/utils'
 import ArticleList from '@/components/ArticleList'
 export default {
   components: {
     ArticleList
   },
   data: () => ({
+    bannerBg: bannerBg,
     keyword: '',
     articleList: [],
     pageObj: {
@@ -102,7 +103,6 @@ export default {
 
 <style lang="scss">
 .index-search{
-  padding-bottom: 2rpx;
   .search-banner{
     margin-bottom: 20rpx;
     position: relative;
