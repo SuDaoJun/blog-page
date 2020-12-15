@@ -1,4 +1,5 @@
 export let baseURL = process.env.NODE_ENV == 'production'?'https://sdjBlog.cn:8090':'https://sdjBlog.cn:8090';
+export let bannerBg = 'https://s3.ax1x.com/2020/12/07/DzKA7q.jpg';
 
 // 判断深层次对象属性是否存在
 export let objProp = (data, path) => {
