@@ -28,19 +28,20 @@
 		{
 			"path": "pages/home/articlePeace",
 			"style": {
-				"navigationBarTitleText": "文章排行"
+        "navigationBarTitleText": "文章排行",
+        "onReachBottomDistance": 100
 			}
 		},
 		{
 			"path": "pages/home/answer",
 			"style": {
-				"navigationBarTitleText": "answer"
+				"navigationBarTitleText": "答案之书"
 			}
 		},
 		{
 			"path": "pages/home/view",
 			"style": {
-				"navigationBarTitleText": "view"
+				"navigationBarTitleText": "每日一看"
 			}
 		},
 		{
