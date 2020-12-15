@@ -1,6 +1,6 @@
 <template>
   <view class="index-home">
-    <nav-header title='路遥博客' :borderBottom='false'></nav-header>
+    <nav-header title='路遥博客'></nav-header>
     <view class="home-swiper">
       <u-swiper :list="swiperList" :title='true' :title-style='titleStyle' mode='dot' :height='360' :border-radius='0' img-mode='aspectFill'></u-swiper>
     </view>
