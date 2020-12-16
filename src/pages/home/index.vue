@@ -2,7 +2,7 @@
   <view class="index-home">
     <nav-header title='路遥博客'></nav-header>
     <view class="home-swiper">
-      <u-swiper :list="swiperList" :title='true' :title-style='titleStyle' mode='dot' :height='360' :border-radius='0' img-mode='aspectFill'></u-swiper>
+      <u-swiper :list="swiperList" :title='true' :title-style='titleStyle' mode='dot' :height='360' :border-radius='0' img-mode='aspectFill' @click='articleDetail'></u-swiper>
     </view>
     <view class='home-type'>
       <view class="box-item" v-for='item in typeList' :key='item.title' @click="routePath(item.path)">
@@ -115,6 +115,12 @@ export default {
     // 路由列表跳转
     routePath(path){
       this.$u.routePath.navigateTo(path);
+    },
+    // 文章详情
+    articleDetail(index){
+      this.$u.routePath.navigateTo('/pages/home/articleDetail', {
+        articleId: this.swiperList[index]._id
+      });
     },
     // 文章搜索
     articleSearch(){

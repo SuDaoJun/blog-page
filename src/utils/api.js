@@ -9,6 +9,9 @@ const install = (Vue, vm) => {
   const article = {
     articleList(params) {
       return vm.$u.get('/blogPage/article/list', params);
+    },
+    articleRandom(params){
+      return vm.$u.get('/blogPage/statistics/randomArticle', params);
     }
   }
 	

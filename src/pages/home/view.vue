@@ -4,7 +4,7 @@
     <view class="view-banner">
       <u-image width="100%" height="360rpx" mode='scaleToFill' :src="bannerBg"></u-image>
     </view>
-    <view class="view-txt">{{articleObj.title}}</view>
+    <view class="view-txt" @click='articleDetail'>{{articleObj.title}}</view>
     <view class="view-btn">
       <u-button type='warning' :loading='loading' @click='articleResult'>每日一看</u-button>
     </view>
@@ -23,13 +23,26 @@ export default {
   computed: {},
   methods: {
     articleResult(){
-
+      this.loading = true;
+      this.$u.api.article.articleRandom({
+        num: 1
+      }).then(res=>{
+        this.loading = false;
+        this.articleObj = res.data[0];
+      })
+    },
+    articleDetail(){
+      this.$u.routePath.navigateTo('/pages/home/articleDetail', {
+        articleId: this.articleObj._id
+      });
     }
   },
   watch: {},
 
   // 页面周期函数--监听页面加载
-  onLoad() {},
+  onLoad() {
+    this.articleResult()
+  },
   // 页面周期函数--监听页面初次渲染完成
   onReady() {},
   // 页面周期函数--监听页面显示(not-nvue)
@@ -57,8 +70,8 @@ export default {
   padding: 0 40rpx;
   font-size: 32rpx;
   letter-spacing: 2rpx;
-  margin: 40rpx 0;
-  color: #007aff;
+  margin: 80rpx 0 60rpx;
+  color: #5098FF;
 }
 .view-btn{
   padding: 0 40rpx;

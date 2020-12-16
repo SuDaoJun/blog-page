@@ -3,8 +3,8 @@
 		{
 			"path": "pages/home/index",
 			"style": {
-        "navigationBarTitleText": "路遥博客",
-        "onReachBottomDistance": 100
+				"navigationBarTitleText": "路遥博客",
+				"onReachBottomDistance": 100
 			}
 		},
 		{
@@ -28,8 +28,8 @@
 		{
 			"path": "pages/home/articlePeace",
 			"style": {
-        "navigationBarTitleText": "文章排行",
-        "onReachBottomDistance": 100
+				"navigationBarTitleText": "文章排行",
+				"onReachBottomDistance": 100
 			}
 		},
 		{
@@ -47,7 +47,14 @@
 		{
 			"path": "pages/home/search",
 			"style": {
-        "navigationBarTitleText": "文章搜索",
+				"navigationBarTitleText": "文章搜索",
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/home/articleDetail",
+			"style": {
+        "navigationBarTitleText": "文章详情",
         "onReachBottomDistance": 100
 			}
 		}

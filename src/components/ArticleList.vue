@@ -1,6 +1,6 @@
 <template>
   <view class="home-article">
-      <view class="article-item u-border-bottom" v-for="(item, index) in articleList" :key="item._id">
+      <view class="article-item u-border-bottom" v-for="(item, index) in articleList" :key="item._id" @click='articleDetail(item._id)'>
         <view class="item-img">
           <u-image  mode="scaleToFill" :height='128' :src="item.image"></u-image>
         </view>
@@ -60,6 +60,11 @@ export default {
   data: () => ({}),
   computed: {},
   methods: {
+    articleDetail(id){
+      this.$u.routePath.navigateTo('/pages/home/articleDetail', {
+        articleId: id
+      });
+    },
     loadmore(){
       this.$emit('loadmore','');
     }
