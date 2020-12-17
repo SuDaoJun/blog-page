@@ -114,7 +114,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .peace-list{
   padding-top: 6rpx;
 }

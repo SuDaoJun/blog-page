@@ -86,7 +86,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .home-article{
   padding-bottom: 2rpx;
   .article-item{

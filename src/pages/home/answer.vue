@@ -65,7 +65,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .answer-title{
     margin-top: 30rpx;
     text-align: center;

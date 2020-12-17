@@ -101,7 +101,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .index-search{
   .search-banner{
     margin-bottom: 20rpx;

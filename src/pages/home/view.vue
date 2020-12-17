@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .view-txt{
   text-align: center;
   padding: 0 40rpx;
