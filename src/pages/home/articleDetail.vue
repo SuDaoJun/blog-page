@@ -36,7 +36,7 @@
       </view>
     </view>
     <view class="detail-bottom">
-      <u-icon name="home" size='48'></u-icon>
+      <u-icon name="home" size='48' @click='backHome'></u-icon>
       <view class="bottom-comment">
         <u-search shape="round" :clearabled="true" maxlength='200' placeholder="评论..." v-model="commentValue" @custom='commentSubmit' @search='commentSubmit'></u-search>
       </view>
@@ -89,6 +89,10 @@ export default {
       if(!this.commentValue){
         return this.$u.toast('请输入评论内容');
       }
+    },
+    // 返回首页
+    backHome(){
+      this.$u.routePath.switchTab('/pages/home/index');
     }
   },
   watch: {},
@@ -99,7 +103,8 @@ export default {
     this.initData();
   },
   // 页面周期函数--监听页面初次渲染完成
-  onReady() {},
+  onReady() {
+  },
   // 页面周期函数--监听页面显示(not-nvue)
   onShow() {},
   // 页面周期函数--监听页面隐藏
@@ -178,6 +183,64 @@ export default {
     .bottom-comment{
       flex: 1;
       padding: 0 40rpx;
+    }
+  }
+}
+/deep/ .content-txt{
+  h1,h2,h3,h4,h5,h6{
+    font-size: 40rpx;
+    padding-bottom: 12px;
+    margin-top: 40rpx;
+    font-weight: 600;
+    margin-bottom: 20rpx;
+    line-height: 1.5;
+    border-bottom: 1rpx solid #ececec;
+    color: #000;
+  }
+  p, div{
+    font-size: 28rpx;
+    margin-top: 20rpx;
+    font-weight: 400;
+    margin-bottom: 20rpx;
+    color: #333;
+  }
+  pre{
+    color: #333;
+    background: rgba(0,0,0,.1);
+    position: relative;
+    overflow: auto;
+    line-height: 1.75;
+    padding: 20rpx 10rpx 20rpx 30rpx;
+    font-size: 24rpx;
+  }
+  img{
+    margin-bottom: 20rpx;
+  }
+  table{
+    font-size: 24rpx;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    margin-top: 0;
+    margin-bottom: 20rpx;
+    border-spacing: 0;
+    border-collapse: collapse;
+    thead{
+      background: #f6f6f6;
+      color: #333;
+      text-align: left;
+      th{
+        font-weight: 600;
+        padding: 12rpx 24rpx;
+        border: 1rpx solid #dfe2e5;
+      }
+    }
+    tr{
+      background-color: #fff;
+    }
+    td{
+      padding: 12rpx 24rpx;
+      border: 1rpx solid #dfe2e5;
     }
   }
 }
