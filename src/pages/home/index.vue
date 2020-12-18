@@ -142,7 +142,23 @@ export default {
     this.initListArticle();
   },
   // 页面周期函数--监听页面初次渲染完成
-  onReady() {},
+  onReady() {
+    if (uni.getStorageSync("rememberObj") && !this.vuex_token) {
+      let rememberObj = uni.getStorageSync("rememberObj");
+      if (rememberObj.remeberVal) {
+        this.$u.api.user
+        .userLogin({
+          name: rememberObj.name,
+          password: rememberObj.pwd
+        })
+        .then((res) => {
+          let data = res.data;
+          this.$u.vuex('vuex_token', data.token);
+          this.$u.vuex('vuex_userInfo', data.user);
+        })
+      }
+    }
+  },
   // 页面周期函数--监听页面显示(not-nvue)
   onShow() {},
   // 页面周期函数--监听页面隐藏

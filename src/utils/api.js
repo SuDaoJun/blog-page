@@ -2,6 +2,12 @@
 
 const install = (Vue, vm) => {
   const user = {
+    userLogin(params = {}) {
+      return vm.$u.post('/blogPage/user/login', params);
+    },
+    userRegister(params = {}) {
+      return vm.$u.post('/blogAdmin/user/register', params);
+    },
     statementList(params = {}) {
       return vm.$u.get('/blogPage/statement/list', params);
     }
@@ -12,6 +18,12 @@ const install = (Vue, vm) => {
     },
     articleDetail(params) {
       return vm.$u.get('/blogPage/article/detail', params)
+    },
+    articleCommentList(params) {
+      return vm.$u.get('/blogPage/comment/list', params)
+    },
+    articleLike(params) {
+      return vm.$u.put('/blogAdmin/article/like',  params)
     },
     articleRandom(params){
       return vm.$u.get('/blogPage/statistics/randomArticle', params);

@@ -1,4 +1,5 @@
 import { baseURL } from '@/utils';
+import store from '@/store';
 const install = (Vue, vm) => {
 	// 此为自定义配置参数
 	Vue.prototype.$u.http.setConfig({
@@ -15,8 +16,8 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.interceptor.request = (config) => {
 		// 引用token
 		// 方式一，存放在vuex的token，假设使用了uView封装的vuex方式
-		// 见：https://uviewui.com/components/globalVariable.html
-		config.header.Authorization = vm.vuex_token;
+    // 见：https://uviewui.com/components/globalVariable.html
+		config.header.Authorization = "Bearer " + vm.vuex_token;
 		
 		// 方式二，如果没有使用uView封装的vuex方法，那么需要使用$store.state获取
 		// config.header.token = vm.$store.state.token;
@@ -41,7 +42,16 @@ const install = (Vue, vm) => {
       return res.data;
     } else if(statusCode == 403) {
       // 假设403为token失效，这里跳转登录
-      vm.$u.toast('验证失败，请重新登录');
+      store.commit('$storeLife', {
+        name: 'vuex_token',
+        value: ''
+      })
+      store.commit('$storeLife', {
+        name: 'vuex_userInfo',
+        value: {}
+      })
+      // vm.$u.vuex('vuex_token', '');
+      // vm.$u.vuex('vuex_userInfo', {});
       return false;
     } else {
       vm.$u.toast(res.data.msg || '服务器错误');

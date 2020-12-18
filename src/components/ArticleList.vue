@@ -50,7 +50,7 @@ export default {
       type: Object,
       default: ()=>{
         return {
-          loadmore: '点击或上拉加载更多',
+          loadmore: '点击或上拉加载更多文章',
           loading: '正在加载...',
           nomore: '没有更多了'
         }

@@ -34,16 +34,48 @@
       <view class="content-txt">
         <u-parse :html="articleData.content" :lazy-load="true" :show-with-animation="true"></u-parse>
       </view>
+      <view class="content-comment">
+        <view class="comment" v-for="(res, index) in commentList" :key="res._id">
+          <view class="left"><image :src="res.avatarImg" mode="aspectFill"></image></view>
+          <view class="right">
+            <view class="top">
+              <view class="name">{{res.createUser?res.createUser.name:'--'}}</view>
+              <view class="like" :class="{ highlight: res.isTop }">
+                <view class="num">{{ res.isTop?'置顶':'' }}</view>
+                <u-icon v-if="!res.isTop" name="thumb-up" :size="30" color="#9a9a9a" @click="getLike(index)"></u-icon>
+                <u-icon v-if="res.isTop" name="thumb-up-fill" :size="30" @click="getLike(index)"></u-icon>
+              </view>
+            </view>
+            <view class="content">{{ res.content }}</view>
+            <view class="reply-box">
+              <view class="item" v-for="(item, index) in res.replyCommentList" :key="item._id">
+                <view class="username">{{item.replyUser?item.replyUser.name:'--'}}</view>
+                <view class="text">{{ item.content }}</view>
+              </view>
+              <view class="all-reply" @tap="toAllReply">
+                共{{ res.replyCommentNum }}条回复
+                <u-icon class="more" name="arrow-right" :size="26"></u-icon>
+              </view>
+            </view>
+            <view class="bottom">
+              {{ res.createTime }}
+              <view class="reply">回复</view>
+            </view>
+          </view>
+        </view>
+        <u-loadmore :status="pageObj.pageStatus" :load-text="loadText" @loadmore='getCommentList' margin-top='30' margin-bottom='30' />
+      </view>
     </view>
     <view class="detail-bottom">
       <u-icon name="home" size='48' @click='backHome'></u-icon>
       <view class="bottom-comment">
-        <u-search shape="round" :clearabled="true" maxlength='200' placeholder="评论..." v-model="commentValue" @custom='commentSubmit' @search='commentSubmit'></u-search>
+        <u-search shape="round" action-text='发送' :clearabled="true" maxlength='200' placeholder="评论..." v-model="commentValue" @custom='commentSubmit' @search='commentSubmit'></u-search>
       </view>
-      <u-icon :color='likeObj.color' :name="likeObj.name" size='48'></u-icon>
+      <u-icon :color="isLike?'#dd524d':'#808080'" :name="isLike?'heart-fill':'heart'" size='48' @click='likeClick'></u-icon>
     </view>
     <u-back-top :scroll-top="scrollTop" :duration='200'></u-back-top>
-    <login-modal></login-modal>
+    <login-modal :modelShow='modelShow' @closeModal='modelShow = false'></login-modal>
+    <u-toast ref="uToast" />
   </view>
 </template>
 
@@ -55,15 +87,23 @@ export default {
     LoginModal
   },
   data: () => ({
+    modelShow: false,
     scrollTop: 0,
     articleId: '',
     articleData: {
       meta: {}
     },
+    commentList: [],
     commentValue: '',
-    likeObj: {
-      name: 'heart',
-      color: '#808080'
+    isLike: false,
+    pageObj: {
+      pageSize: 1,
+      pageStatus: 'loadmore'
+    },
+    loadText: {
+      loadmore: '点击或上拉加载更多评论',
+      loading: '正在加载...',
+      nomore: '没有更多了'
     }
   }),
   computed: {},
@@ -76,6 +116,11 @@ export default {
       data.createTime = data.createTime.split(' ')[0];
       data.avatarImg = data.createUser?`${baseURL}/blogAdmin/file/down?downId=${data.createUser.avatarId}`:'';
       this.articleData = data;
+      if(data.linkUser.length > 0 && this.vuex_userInfo.id){
+        let userId = this.vuex_userInfo.id;
+        this.isLike = data.linkUser.some(({_id})=>_id == userId);
+      }
+      this.getCommentList();
     },
     // 获取文章详情
     async getArticleDetail(){
@@ -84,10 +129,82 @@ export default {
       })
       return result;
     },
+    // 获取评论列表
+    getCommentList(){
+      let {articleId, pageObj} = this;
+      this.$u.api.article.articleCommentList({
+        articleId: articleId,
+        currentPage: pageObj.pageSize,
+        pageSize: 20,
+        status: "1"
+      }).then(res=>{
+        console.info('articleCommentList')
+        console.info(res)
+        pageObj.pageSize = pageObj.pageSize + 1;
+        let dataList = res.data.data;
+        if(dataList.length > 0){
+          dataList.forEach(item=>{
+            item.avatarImg = item.createUser?`${baseURL}/blogAdmin/file/down?downId=${item.createUser.avatarId}`:'';
+          })
+          this.commentList = this.commentList.concat(dataList);
+          if(this.commentList.length == res.data.count){
+            pageObj.pageStatus = 'nomore';
+          }else{
+            pageObj.pageStatus = 'loadmore';
+          }
+        }else{
+          pageObj.pageStatus = 'nomore';
+        }
+      })
+    },
+    // 点赞
+    likeClick(){
+      if(this.vuex_userInfo.id){
+        let {articleId, isLike, articleData, vuex_userInfo} = this;
+        this.$u.api.article.articleLike({
+          id: articleId,
+          type: isLike ? "0" : "1"
+        }).then(res=>{
+          if (isLike) {
+            articleData.meta.likeTotal -= 1;
+            articleData.linkUser = articleData.linkUser.filter(item => {
+              item._id != vuex_userInfo.id;
+            });
+            this.$u.toast('已取消点赞');
+          } else {
+            articleData.meta.likeTotal += 1;
+            articleData.linkUser.push({
+              avatarId: vuex_userInfo.avatarId,
+              _id: vuex_userInfo.id,
+              name: vuex_userInfo.name
+            });
+            this.$refs.uToast.show({
+              title: '点赞成功',
+              type: 'success'
+            })
+          }
+          this.isLike = !isLike;
+        }).catch(res=>{
+          if(res.statusCode == 403){
+            this.$u.toast('token失效，请重新登录');
+            this.modelShow = true;
+          }
+        })
+      }else{
+        this.modelShow = true;
+        this.$u.toast('点赞前，请先登录');
+      }
+    },
     // 评论提交
     commentSubmit(){
       if(!this.commentValue){
         return this.$u.toast('请输入评论内容');
+      }
+      if(this.vuex_userInfo.id){
+
+      }else{
+        this.modelShow = true;
+        this.$u.toast('评论前，请先登录');
       }
     },
     // 返回首页
@@ -118,7 +235,11 @@ export default {
     uni.stopPullDownRefresh();
   },
   // 页面处理函数--监听用户上拉触底
-  onReachBottom() {},
+  onReachBottom() {
+    if(this.pageObj.pageStatus == 'loadmore'){
+      this.getCommentList();
+    }
+  },
   // 页面处理函数--监听页面滚动(not-nvue)
   onPageScroll(event) {
     this.scrollTop = event.scrollTop;
@@ -162,6 +283,84 @@ export default {
             margin-right: 30rpx;
             .item-num{
               margin-left: 6rpx;
+            }
+          }
+        }
+      }
+    }
+    .content-comment{
+      .comment {
+        display: flex;
+        padding: 30rpx;
+        .left {
+          image {
+            width: 64rpx;
+            height: 64rpx;
+            border-radius: 50%;
+            background-color: #f2f2f2;
+          }
+        }
+        .right {
+          flex: 1;
+          padding-left: 20rpx;
+          font-size: 30rpx;
+          .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10rpx;
+            .name {
+              color: #5677fc;
+            }
+            .like {
+              display: flex;
+              align-items: center;
+              color: #9a9a9a;
+              font-size: 26rpx;
+              .num {
+                margin-right: 4rpx;
+                color: #9a9a9a;
+              }
+            }
+            .highlight {
+              color: #5677fc;
+              .num {
+                color: #5677fc;
+              }
+            }
+          }
+          .content {
+            margin-bottom: 10rpx;
+          }
+          .reply-box {
+            background-color: rgb(242, 242, 242);
+            border-radius: 12rpx;
+            .item {
+              padding: 20rpx;
+              border-bottom: solid 2rpx $u-border-color;
+              .username {
+                font-size: 24rpx;
+                color: #999999;
+              }
+            }
+            .all-reply {
+              padding: 20rpx;
+              display: flex;
+              color: #5677fc;
+              align-items: center;
+              .more {
+                margin-left: 6rpx;
+              }
+            }
+          }
+          .bottom {
+            margin-top: 20rpx;
+            display: flex;
+            font-size: 24rpx;
+            color: #9a9a9a;
+            .reply {
+              color: #5677fc;
+              margin-left: 10rpx;
             }
           }
         }
