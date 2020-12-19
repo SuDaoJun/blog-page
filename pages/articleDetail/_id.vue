@@ -472,7 +472,7 @@ export default {
               if (this.isLike) {
                 articleDetail.meta.likeTotal -= 1;
                 articleDetail.linkUser = articleDetail.linkUser.filter(item => {
-                  item._id != userInfo.id;
+                  return item._id != userInfo.id;
                 });
               } else {
                 articleDetail.meta.likeTotal += 1;
