@@ -51,8 +51,8 @@ export default {
       default: ()=>{
         return {
           loadmore: '点击或上拉加载更多文章',
-          loading: '正在加载...',
-          nomore: '没有更多了'
+          loading: '正在加载文章...',
+          nomore: '没有更多文章了'
         }
       }
     }

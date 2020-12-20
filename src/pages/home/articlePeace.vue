@@ -76,7 +76,7 @@ export default {
       }
       this.sortBy = obj[index];
       this.pageObj.pageSize = 1;
-      this.pageObj.pageStatus = 'loadmore';
+      this.pageObj.pageStatus = 'loading';
       this.articleList = [];
       this.initListArticle();
     }

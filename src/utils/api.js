@@ -22,6 +22,12 @@ const install = (Vue, vm) => {
     articleCommentList(params) {
       return vm.$u.get('/blogPage/comment/list', params)
     },
+    articleComment(params) {
+      return vm.$u.post('/blogAdmin/comment/add',  params)
+    },
+    replyCommentAdd(params){
+      return vm.$u.post('/blogAdmin/replyComment/add',  params )
+    },
     articleLike(params) {
       return vm.$u.put('/blogAdmin/article/like',  params)
     },

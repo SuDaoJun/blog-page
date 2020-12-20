@@ -92,7 +92,9 @@ export default {
     }
   },
   watch: {
-
+    keyword(val){
+      this.value = this.keyword;
+    }
   },
 
   // 组件周期函数--监听组件挂载完毕
