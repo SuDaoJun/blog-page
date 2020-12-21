@@ -1,18 +1,51 @@
 <template>
-  <view class="index">message</view>
+  <view class="index-message">
+    <nav-header title='留言'></nav-header>
+    <view class="message-banner">
+      <u-image width="100%" height="400rpx" mode='scaleToFill' :src="messageBg"></u-image>
+      <message-barrage ref='messageBarrage' @end="dataEnd"></message-barrage>
+    </view>
+  </view>
 </template>
 
 <script>
-
+import { baseURL, messageBg } from '@/utils'
+import MessageBarrage from '@/components/MessageBarrage'
 export default {
-  components: {},
-  data: () => ({}),
+  components: {
+    MessageBarrage
+  },
+  data: () => ({
+    messageBg,
+    messageList: [],
+    randomMessageList: []
+  }),
   computed: {},
-  methods: {},
+  methods: {
+    // 获取留言列表
+    getMessageList(){
+
+    },
+    // 获取随机留言
+    getRandomMessageList(){
+      this.$u.api.message.messageRandom({
+        num: 99
+      }).then(res=>{
+        this.randomMessageList = res.data;
+        this.$refs.messageBarrage.start(this.randomMessageList);
+      })
+    },
+    dataEnd(){
+      this.getRandomMessageList();
+    }
+  },
   watch: {},
 
   // 页面周期函数--监听页面加载
-  onLoad() {},
+  onLoad() {
+    this.getMessageList();
+    this.getRandomMessageList();
+  },
   // 页面周期函数--监听页面初次渲染完成
   onReady() {},
   // 页面周期函数--监听页面显示(not-nvue)
@@ -34,4 +67,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.message-banner{
+  margin-bottom: 20rpx;
+  position: relative;
+}
+</style>

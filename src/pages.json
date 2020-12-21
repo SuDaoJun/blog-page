@@ -10,13 +10,14 @@
 		{
 			"path": "pages/classify/index",
 			"style": {
-				"navigationBarTitleText": "分类"
+				"navigationBarTitleText": "文章分类"
 			}
 		},
 		{
 			"path": "pages/message/index",
 			"style": {
-				"navigationBarTitleText": "留言"
+        "navigationBarTitleText": "留言",
+        "onReachBottomDistance": 100
 			}
 		},
 		{
@@ -54,7 +55,14 @@
 		{
 			"path": "pages/home/articleDetail",
 			"style": {
-        "navigationBarTitleText": "文章详情",
+				"navigationBarTitleText": "文章详情",
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/classify/articleTag",
+			"style": {
+        "navigationBarTitleText": "文章标签",
         "onReachBottomDistance": 100
 			}
 		}

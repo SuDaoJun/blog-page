@@ -13,33 +13,45 @@ const install = (Vue, vm) => {
     }
   }
   const article = {
-    articleList(params) {
+    articleList(params = {}) {
       return vm.$u.get('/blogPage/article/list', params);
     },
-    articleDetail(params) {
+    articleDetail(params = {}) {
       return vm.$u.get('/blogPage/article/detail', params)
     },
-    articleCommentList(params) {
+    articleTagList(params = {}) {
+      return vm.$u.get('/blogPage/statistics/tagList', params)
+    },
+    articleCommentList(params = {}) {
       return vm.$u.get('/blogPage/comment/list', params)
     },
-    articleComment(params) {
+    articleComment(params = {}) {
       return vm.$u.post('/blogAdmin/comment/add',  params)
     },
-    replyCommentAdd(params){
+    replyCommentAdd(params = {}){
       return vm.$u.post('/blogAdmin/replyComment/add',  params )
     },
-    articleLike(params) {
+    articleLike(params = {}) {
       return vm.$u.put('/blogAdmin/article/like',  params)
     },
-    articleRandom(params){
+    articleRandom(params = {}){
       return vm.$u.get('/blogPage/statistics/randomArticle', params);
     }
+  }
+  const message = {
+    messageList(params = {}) {
+      return vm.$u.get('/blogPage/message/list', params);
+    },
+    messageRandom(params = {}) {
+      return vm.$u.get('/blogPage/statistics/randomMessage', params);
+    },
   }
 	
 	// 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
 	vm.$u.api = {
     user,
-    article
+    article,
+    message
   };
 }
 

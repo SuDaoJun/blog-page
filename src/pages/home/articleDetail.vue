@@ -99,7 +99,7 @@
         <u-loadmore :status="pageObj.pageStatus" :load-text="loadText" @loadmore='getCommentList' margin-top='30' margin-bottom='30' />
       </view>
     </view>
-    <view class="detail-bottom" :style="{boxShadow: popupShow?'none':'0 -4rpx 20rpx rgba(0, 0, 0, 0.1)'}">
+    <view :class="heightChange?'detail-bottom detail-change':'detail-bottom'" :style="{boxShadow: popupShow?'none':'0 -4rpx 20rpx rgba(0, 0, 0, 0.1)'}">
       <u-icon name="home" size='48' @click='backHome'></u-icon>
       <view class="bottom-comment">
         <u-search shape="round" action-text='发送' :focus='commentObj.commentFocus' :disabled='commentObj.commentDisabled' :clearabled="true" maxlength='200' :placeholder="commentObj.commentPlaceholder" v-model="commentValue" @custom='commentSubmit' @search='commentSubmit' @blur='inputBlur' @focus='inputFocus'></u-search>
@@ -174,6 +174,8 @@ export default {
   },
   data: () => ({
     baseURL,
+    windowHeight: 0,
+    heightChange: false,
     modelShow: false,
     scrollTop: 0,
     articleId: '',
@@ -387,6 +389,19 @@ export default {
   onLoad(option) {
     this.articleId = option.articleId;
     this.initData();
+    try {
+        const res = uni.getSystemInfoSync();
+        this.windowHeight = res.windowHeight;
+    } catch (e) {
+        // error
+    }
+    uni.onWindowResize((res) => {
+      if(this.windowHeight - res.size.windowHeight > 80){
+        this.heightChange = true
+      }else{
+        this.heightChange = false
+      }
+    })
   },
   // 页面周期函数--监听页面初次渲染完成
   onReady() {
@@ -520,6 +535,11 @@ export default {
     display: flex;
     align-items: center;
     z-index: 9999;
+    &.detail-change{
+      height: 160rpx;
+      align-items: flex-start;
+      padding-top: 20rpx;
+    }
     .bottom-comment{
       flex: 1;
       padding: 0 40rpx;
