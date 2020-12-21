@@ -24,7 +24,6 @@
 </template>
 
 <script>
-let cycle;
 
 // 弹幕字体颜色
 function getRandomColor() {
@@ -42,11 +41,11 @@ export default {
 	props: {
 		minTime: {
 			type: Number,
-			default: 4
+			default: 8
 		},
 		maxTime: {
 			type: Number,
-			default: 9
+			default: 16
 		},
 		minTop: {
 			type: Number,
@@ -54,31 +53,35 @@ export default {
 		},
 		maxTop: {
 			type: Number,
-			default: 40
+			default: 90
 		}
 	},
 	data() {
 		return {
-			items: [],
+      items: [],
+      cycle: null
 		}
-	},
+  },
 	methods: {
 		add(text = '',time = Math.ceil(Math.floor(Math.random()*(this.maxTime-this.minTime+1)+this.minTime))) {
 			this.items.push({
 				text,
 				time,
 				top: Math.ceil(Math.random()*(this.maxTop-this.minTop+1)+this.minTop),
-				color: getRandomColor(),
-				display: 1,
+        color: getRandomColor(),
+        display: 'show'
 			});
-		},
+    },
+    clear(){
+      clearInterval(this.cycle);
+    },
 		start(items = []) {
 			this.items = [];
-			cycle && (clearInterval(cycle));
+			this.cycle && (clearInterval(this.cycle));
 			let i = 0,len = items.length;
 			
-			cycle = setInterval(()=> {
-				let time = 5;
+			this.cycle = setInterval(()=> {
+				let time = 8;
 				// #ifndef H5
 					time = Math.ceil(Math.floor(Math.random()*(this.maxTime-this.minTime+1)+this.minTime));
 				// #endif
@@ -89,12 +92,12 @@ export default {
 					i++;
 				}
 				else {
-					clearInterval(cycle);
+					clearInterval(this.cycle);
 					setTimeout(()=>{
 						this.$emit("end",{});
-					},time * 1000)
+					}, 2000)
 				}
-			}, 500)
+			}, 1000)
 		}
 	}
 }	
@@ -103,18 +106,20 @@ export default {
 
 <style>
 .aon{
-position: fixed;
+position: absolute;
 white-space:nowrap;
-
-animation: mymove 5s linear forwards;
+animation: mymove 8s linear forwards;
 animation-timing-function: linear;
 -webkit-animation-timing-function: linear;
 animation-fill-mode: forwards;
 }
 .l-barrage{
-  z-index: 3;
+  z-index: 99;
   width: 100%;
-  position: fixed;
+  height: 100%;
+  left: 0;
+  top: 0;
+  position: absolute;
 }
 
 @keyframes mymove

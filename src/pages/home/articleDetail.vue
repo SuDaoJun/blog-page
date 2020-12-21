@@ -54,7 +54,7 @@
      <view class="content-box">
        <view class="box-title u-border-bottom">
          <text>文章评论</text>
-         <text class='box-num'>有{{pageObj.total}}条评论</text>
+         <text class='box-num'>共{{pageObj.total}}条评论</text>
        </view>
      </view>
       <view class="content-comment">
