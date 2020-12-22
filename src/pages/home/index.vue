@@ -143,7 +143,7 @@ export default {
   },
   // 页面周期函数--监听页面初次渲染完成
   onReady() {
-    if (uni.getStorageSync("rememberObj") && !this.vuex_token) {
+    if (uni.getStorageSync("loginStatus") && uni.getStorageSync("loginStatus") == '1' && !this.vuex_token) {
       let rememberObj = uni.getStorageSync("rememberObj");
       if (rememberObj.remeberVal) {
         this.$u.api.user

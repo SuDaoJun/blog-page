@@ -170,6 +170,7 @@ export default {
                 pwd: password,
               };
               uni.setStorageSync("rememberObj", rememberObj);
+              uni.setStorageSync("loginStatus", '1');
               this.show = false;
             })
             .catch(() => {
