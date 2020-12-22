@@ -16,8 +16,8 @@
 		{
 			"path": "pages/message/index",
 			"style": {
-        "navigationBarTitleText": "留言",
-        "onReachBottomDistance": 100
+				"navigationBarTitleText": "留言",
+				"onReachBottomDistance": 100
 			}
 		},
 		{
@@ -62,8 +62,14 @@
 		{
 			"path": "pages/classify/articleTag",
 			"style": {
-        "navigationBarTitleText": "文章标签",
-        "onReachBottomDistance": 100
+				"navigationBarTitleText": "文章标签",
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/person/infoData",
+			"style": {
+				"navigationBarTitleText": "个人信息"
 			}
 		}
 	],

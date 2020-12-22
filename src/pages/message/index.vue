@@ -14,14 +14,14 @@
         <text class='box-num'>共{{pageObj.total}}条留言</text>
       </view>
       <view class="list-box" v-for="item in messageList" :key='item._id'>
-        <div class="box-img">
+        <view class="box-img">
           <u-avatar size='64' :src='item.avatarImg' ></u-avatar>
-        </div>
-        <div class="box-content">
-          <div class="content-name">{{item.createUser?item.createUser.name:'--'}}</div>
-          <div class="content-txt">{{item.content}}</div>
-          <div class="content-time">{{item.createTime}}</div>
-        </div>
+        </view>
+        <view class="box-content">
+          <view class="content-name">{{item.createUser?item.createUser.name:'--'}}</view>
+          <view class="content-txt">{{item.content}}</view>
+          <view class="content-time">{{item.createTime}}</view>
+        </view>
       </view>
       <u-loadmore :status="pageObj.pageStatus" :load-text="loadText" @loadmore='getMessageList' margin-top='30' margin-bottom='30' />
     </view>
