@@ -2,7 +2,7 @@
   <view class="index-search">
     <nav-header :isBack='true' :borderBottom='true' :title='tagTitle'></nav-header>
     <view class="search-banner">
-      <u-image width="100%" height="360rpx" mode='scaleToFill' :src="bannerBg"></u-image>
+      <u-image width="100%" height="360rpx" error-icon='photo' mode='scaleToFill' :src="bannerBg"></u-image>
     </view>
     <article-list :articleList='articleList' :status='pageObj.pageStatus' @loadmore='initListArticle'></article-list>
     <u-back-top :scroll-top="scrollTop" :duration='200'></u-back-top>

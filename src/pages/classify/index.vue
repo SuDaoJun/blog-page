@@ -5,7 +5,7 @@
       <view class="list-wrap" v-for='item in tagLsit' :key='item._id.id' @click='tagClick(item._id)'>
         <view class="wrap-box">
           <view class="box-title">
-            <u-image width="100%" border-radius='10' height="200rpx" mode='scaleToFill' :src="bannerBg"></u-image>
+            <u-image width="100%" border-radius='10' error-icon='photo' height="200rpx" mode='scaleToFill' :src="bannerBg"></u-image>
             <u-badge :bgColor='item._id.bgColor' :overflow-count='999' :offset='[-12,-12]' :count="item.count"></u-badge>
           </view>
           <view class="box-name u-line-1">

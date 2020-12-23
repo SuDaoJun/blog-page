@@ -7,7 +7,7 @@
     <view class='home-type'>
       <view class="box-item" v-for='item in typeList' :key='item.title' @click="routePath(item.path)">
         <view class="item-icon">
-          <u-icon :name="item.iconObj.name" custom-prefix="custom-icon" :size="item.iconObj.size" :color="item.iconObj.color"></u-icon>
+          <u-icon :name="item.iconObj.name" :custom-prefix="item.iconObj.customPrefix?'custom-icon':'uicon'" :size="item.iconObj.size" :color="item.iconObj.color"></u-icon>
         </view>
         <text>{{item.title}}</text>
       </view>
@@ -37,27 +37,30 @@ export default {
         title: '排行',
         path: '/pages/home/articlePeace',
         iconObj: {
-          name: 'icon--scrm-53',
-          size: '80',
-          color: '#3B8EE8'
+          name: 'biaoqiankuozhan_paihang-384',
+          size: '50',
+          color: '#3B8EE8',
+          customPrefix: true
         }
       },
       {
         title: '答案',
         path: '/pages/home/answer',
         iconObj: {
-          name: 'icon--scrm-49',
-          size: '80',
-          color: '#5078AA'
+          name: 'file-text',
+          size: '50',
+          color: '#5078AA',
+          customPrefix: false
         }
       },
       {
         title: '看看',
         path: '/pages/home/view',
         iconObj: {
-          name: 'icon--scrm-50',
+          name: 'icon--scrm-49',
           size: '80',
-          color: '#EE8848'
+          color: '#EE8848',
+          customPrefix: true
         }
       }
     ],

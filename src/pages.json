@@ -71,6 +71,13 @@
 			"style": {
 				"navigationBarTitleText": "个人信息"
 			}
+		},
+		{
+			"path": "pages/person/infoArticle",
+			"style": {
+        "navigationBarTitleText": "历史足迹",
+        "onReachBottomDistance": 100
+			}
 		}
 	],
 	"easycom": {

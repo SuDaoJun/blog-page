@@ -13,7 +13,7 @@
               <text class='item-num'>{{articleData.createTime}}</text>
             </view>
             <view class="extra-item">
-              <u-icon name="edit-pen"></u-icon>
+              <u-icon name="wenzi" custom-prefix="custom-icon"></u-icon>
               <text class='item-num'>{{articleData.meta.txtTotal}}</text>
             </view>
             <view class="extra-item">
@@ -21,11 +21,11 @@
               <text class='item-num'>{{articleData.meta.viewTotal}}</text>
             </view>
             <view class="extra-item">
-              <u-icon name="chat"></u-icon>
+              <u-icon name="pinglun" custom-prefix="custom-icon"></u-icon>
               <text class='item-num'>{{articleData.meta.commentTotal}}</text>
             </view>
             <view class="extra-item">
-              <u-icon name="heart"></u-icon>
+              <u-icon name="thumb-up"></u-icon>
               <text class='item-num'>{{articleData.meta.likeTotal}}</text>
             </view>
           </view>
@@ -41,7 +41,7 @@
        <view class="box-like">
          <view class="like-total">
            <text>{{articleData.meta.likeTotal}}人已赞</text>
-           <u-icon :color="isLike?'#dd524d':'#808080'" :name="isLike?'heart-fill':'heart'" size='48' @click='likeClick'></u-icon>
+           <u-icon :color="isLike?'#dd524d':'#808080'" :name="isLike?'thumb-up-fill':'thumb-up'" size='48' @click='likeClick'></u-icon>
          </view>
          <view class="like-list" v-show='articleData.linkUser && articleData.linkUser.length > 0'>
            <view class="list-box u-line-1" v-for='item in articleData.linkUser' :ke='item._id'>
@@ -90,7 +90,7 @@
             <view class="bottom">
               {{ res.createTime }}
               <view class="reply" @click='replyComment(res.createUser, res._id)'>
-                <u-icon name='chat' size='26'></u-icon>
+                <u-icon name="pinglun" custom-prefix="custom-icon" size='26'></u-icon>
                 <text>回复</text>
               </view>
             </view>
@@ -100,11 +100,11 @@
       </view>
     </view>
     <view :class="heightChange?'detail-bottom detail-change':'detail-bottom'" :style="{boxShadow: popupShow?'none':'0 -4rpx 20rpx rgba(0, 0, 0, 0.1)'}">
-      <u-icon name="home" size='48' @click='backHome'></u-icon>
+      <u-icon name="shouye" custom-prefix="custom-icon"  size='48' @click='backHome'></u-icon>
       <view class="bottom-comment">
         <u-search shape="round" action-text='发送' :focus='commentObj.commentFocus' :disabled='commentObj.commentDisabled' :clearabled="true" maxlength='200' :placeholder="commentObj.commentPlaceholder" v-model="commentValue" @custom='commentSubmit' @search='commentSubmit' @blur='inputBlur' @focus='inputFocus'></u-search>
       </view>
-      <u-icon :color="isLike?'#dd524d':'#808080'" :name="isLike?'heart-fill':'heart'" size='48' @click='likeClick'></u-icon>
+      <u-icon :color="isLike?'#dd524d':'#808080'" :name="isLike?'thumb-up-fill':'thumb-up'" size='48' @click='likeClick'></u-icon>
     </view>
     <u-back-top :scroll-top="scrollTop" :duration='200'></u-back-top>
     <login-modal :modelShow='modelShow' @closeModal='modelShow = false'></login-modal>
@@ -129,7 +129,7 @@
             <view class="bottom">
               {{ popupCommentObj.createTime }}
               <view class="reply" @click='replyComment(popupCommentObj.createUser, popupCommentObj._id)'>
-                <u-icon name='chat' size='26'></u-icon>
+                <u-icon name="pinglun" custom-prefix="custom-icon" size='26'></u-icon>
                 <text>回复</text>
               </view>
             </view>
@@ -153,7 +153,7 @@
               <view class="right-bottom">
                 {{ item.createTime }}
                 <view class="reply" @click='replyComment(item.replyUser, item.commentId)'>
-                  <u-icon name='chat' size='26'></u-icon>
+                  <u-icon name="pinglun" custom-prefix="custom-icon" size='26'></u-icon>
                   <text>回复</text>
                 </view>
               </view>
@@ -212,7 +212,6 @@ export default {
     // 数据初始化
     async initData(){
       let result = await this.getArticleDetail();
-      console.info(result)
       let data = result.data;
       data.createTime = data.createTime.split(' ')[0];
       data.avatarImg = data.createUser?`${baseURL}/blogAdmin/file/down?downId=${data.createUser.avatarId}`:'';
@@ -291,7 +290,6 @@ export default {
           this.isLike = !isLike;
         }).catch(res=>{
           if(res.statusCode == 403){
-            this.$u.toast('token失效，请重新登录');
             this.modelShow = true;
           }
         })

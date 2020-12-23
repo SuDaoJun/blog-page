@@ -18,9 +18,11 @@
     </view>
     <view class="person-article u-m-t-20">
       <u-cell-group>
-        <u-cell-item icon="eye" title="最近浏览"></u-cell-item>
-        <u-cell-item icon="photo" title="我的点赞"></u-cell-item>
-        <u-cell-item icon="heart" title="我的评论"></u-cell-item>
+        <u-cell-item @click="historyArticle('1')" icon="eye" title="最近浏览"></u-cell-item>
+        <u-cell-item @click="historyArticle('2')" icon="thumb-up" title="我的点赞"></u-cell-item>
+        <u-cell-item @click="historyArticle('3')" title="我的评论">
+          <u-icon name="pinglun" slot="icon" size='32' color='#606266' :custom-style='customStyle' custom-prefix="custom-icon"></u-icon>
+        </u-cell-item>
       </u-cell-group>
     </view>
     <login-modal :modelShow='modelShow' @closeModal='modelShow = false'></login-modal>
@@ -35,16 +37,23 @@ export default {
   components: {
     LoginModal
   },
-  data: () => ({
-    baseURL,
-    modelShow: false,
-    confirShow: false,
-  }),
+  data(){
+    return {
+      baseURL,
+      modelShow: false,
+      confirShow: false,
+      customStyle: {
+        height: '48rpx',
+        marginRight: '10rpx',
+      }
+    }
+  },
   computed: {},
   methods: {
     // 查看用户信息
     infoData(){
       if(!this.vuex_userInfo.id){
+        this.$u.toast('请先登录');
         this.modelShow = true;
         return
       }
@@ -52,6 +61,7 @@ export default {
     },
     // 退出登录
     logout(){
+      //mixin中this无法获取store
       // this.$u.vuex('vuex_token', '');
       // this.$u.vuex('vuex_userInfo', {});
       uni.setStorageSync("loginStatus", '0');
@@ -63,6 +73,17 @@ export default {
         name: 'vuex_userInfo',
         value: {}
       })
+    },
+    // 历史足迹
+    historyArticle(type){
+      if(!this.vuex_userInfo.id){
+        this.$u.toast('请先登录');
+        this.modelShow = true;
+        return
+      }
+      this.$u.routePath.navigateTo('/pages/person/infoArticle', {
+        type
+      });
     }
   },
   watch: {},

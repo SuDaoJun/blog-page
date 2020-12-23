@@ -5,6 +5,12 @@ const install = (Vue, vm) => {
     userLogin(params = {}) {
       return vm.$u.post('/blogPage/user/login', params);
     },
+    userUpdate(params = {}) {
+      return vm.$u.put('/blogAdmin/user/update', params);
+    },
+    userPwdModify(params = {}) {
+      return vm.$u.post('/blogAdmin/user/modifyPwd', params);
+    },
     userRegister(params = {}) {
       return vm.$u.post('/blogAdmin/user/register', params);
     },
@@ -36,7 +42,10 @@ const install = (Vue, vm) => {
     },
     articleRandom(params = {}){
       return vm.$u.get('/blogPage/statistics/randomArticle', params);
-    }
+    },
+    getUserHistory(params = {}){
+      return vm.$u.get('/blogPage/statistics/userHistory', params);
+    },
   }
   const message = {
     messageList(params = {}) {

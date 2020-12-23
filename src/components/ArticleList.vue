@@ -2,7 +2,7 @@
   <view class="home-article">
       <view class="article-item u-border-bottom" v-for="(item, index) in articleList" :key="item._id" @click='articleDetail(item._id)'>
         <view class="item-img">
-          <u-image  mode="scaleToFill" :height='128' :src="item.image"></u-image>
+          <u-image  mode="scaleToFill" error-icon='photo' :height='128' :src="item.image"></u-image>
         </view>
         <view class="item-box">
           <view class="box-info">
@@ -15,11 +15,11 @@
               <text class='item-value'>{{item.createTime}}</text>
             </view>
             <view class="bottom-item">
-              <u-icon name="chat"></u-icon>
+              <u-icon name="pinglun" custom-prefix="custom-icon"></u-icon>
               <text class='item-value'>{{item.meta.commentTotal}}</text>
             </view>
             <view class="bottom-item">
-              <u-icon name="heart"></u-icon>
+              <u-icon name="thumb-up"></u-icon>
               <text class='item-value'>{{item.meta.likeTotal}}</text>
             </view>
             <view class="bottom-item">

@@ -2,7 +2,7 @@
   <view class="index-answer">
     <nav-header :isBack='true' title='答案之书'></nav-header>
     <view class="answer-banner">
-      <u-image width="100%" height="360rpx" mode='scaleToFill' :src="bannerBg"></u-image>
+      <u-image width="100%" height="360rpx" error-icon='photo' mode='scaleToFill' :src="bannerBg"></u-image>
     </view>
     <view class="answer-title">你的答案</view>
     <view class="answer-btn">

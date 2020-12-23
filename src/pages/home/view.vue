@@ -2,7 +2,7 @@
   <view class="index-view">
     <nav-header :isBack='true' title='每日一看'></nav-header>
     <view class="view-banner">
-      <u-image width="100%" height="360rpx" mode='scaleToFill' :src="bannerBg"></u-image>
+      <u-image width="100%" height="360rpx" error-icon='photo' mode='scaleToFill' :src="bannerBg"></u-image>
     </view>
     <view class="view-txt" @click='articleDetail'>{{articleObj.title}}</view>
     <view class="view-btn">

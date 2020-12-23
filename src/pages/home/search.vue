@@ -2,7 +2,7 @@
   <view class="index-search">
     <nav-header :isBack='true' :borderBottom='false' :useSlot='true' :keyword='keyword' @handleSearch='handleSearch'></nav-header>
     <view class="search-banner">
-      <u-image width="100%" height="360rpx" mode='scaleToFill' :src="bannerBg"></u-image>
+      <u-image width="100%" height="360rpx" error-icon='photo' mode='scaleToFill' :src="bannerBg"></u-image>
       <view class="banner-txt">
         搜索关键字：{{keyword || '无'}}
       </view>

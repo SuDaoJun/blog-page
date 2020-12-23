@@ -50,6 +50,7 @@ const install = (Vue, vm) => {
         name: 'vuex_userInfo',
         value: {}
       })
+      vm.$u.toast('token失效，请重新登录');
       // vm.$u.vuex('vuex_token', '');
       // vm.$u.vuex('vuex_userInfo', {});
       return false;

@@ -2,7 +2,7 @@
   <view class="index-message">
     <nav-header title='留言'></nav-header>
     <view class="message-banner">
-      <u-image width="100%" height="400rpx" mode='scaleToFill' :src="messageBg"></u-image>
+      <u-image width="100%" height="400rpx" error-icon='photo' mode='scaleToFill' :src="messageBg"></u-image>
       <message-barrage ref='messageBarrage' @end="dataEnd"></message-barrage>
     </view>
     <view class="message-search">
@@ -123,8 +123,11 @@ export default {
             this.$refs.messageBarrage.add(messageValue);
             this.messageValue = '';
             this.reloadMessage();
-          }).catch(()=>{
+          }).catch((res)=>{
             this.messageDisabled = false;
+            if(res.statusCode == 403){
+              this.modelShow = true;
+            }
           })
         }
       }else{
