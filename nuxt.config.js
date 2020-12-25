@@ -28,6 +28,9 @@ export default {
     script:[
       {
         src:'/live2dw/lib/L2Dwidget.min.js'
+      },
+      {
+        src:'/navigator.js'
       }
     ]
   },
