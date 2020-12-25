@@ -10,7 +10,7 @@
         <view class="u-font-14 u-tips-color u-line-1">{{vuex_userInfo.info}}</view>
       </view>
       <view class="u-m-l-10 u-p-10 u-flex">
-        <view class='u-m-r-20' v-show='vuex_userInfo.id' @click.stop='logout'>
+        <view class='u-m-r-20' v-if='vuex_userInfo.id' @click.stop='logout'>
           <u-tag text="退出登录" type='warning' shape="circle" />
         </view>
         <u-icon name="arrow-right" color="#969799" size="28"></u-icon>
@@ -53,7 +53,6 @@ export default {
     // 查看用户信息
     infoData(){
       if(!this.vuex_userInfo.id){
-        this.$u.toast('请先登录');
         this.modelShow = true;
         return
       }
@@ -77,7 +76,7 @@ export default {
     // 历史足迹
     historyArticle(type){
       if(!this.vuex_userInfo.id){
-        this.$u.toast('请先登录');
+        this.$u.toast('查看信息前，请先登录');
         this.modelShow = true;
         return
       }

@@ -2,7 +2,7 @@
   <view class="index-message">
     <nav-header title='留言'></nav-header>
     <view class="message-banner">
-      <u-image width="100%" height="400rpx" error-icon='photo' mode='scaleToFill' :src="messageBg"></u-image>
+      <u-image width="100%" height="440rpx" error-icon='photo' mode='scaleToFill' :src="messageBg"></u-image>
       <message-barrage ref='messageBarrage' @end="dataEnd"></message-barrage>
     </view>
     <view class="message-search">
@@ -39,25 +39,27 @@ export default {
     MessageBarrage,
     LoginModal
   },
-  data: () => ({
-    messageBg,
-    messageList: [],
-    randomMessageList: [],
-    messageValue: '',
-    messageDisabled: false,
-    modelShow: false,
-    scrollTop: 0,
-    pageObj: {
-      pageSize: 1,
-      total: 0,
-      pageStatus: 'loadmore'
-    },
-    loadText: {
-      loadmore: '点击或上拉加载更多留言',
-      loading: '正在加载留言...',
-      nomore: '没有更多留言了'
+  data(){
+    return {
+      messageBg,
+      messageList: [],
+      randomMessageList: [],
+      messageValue: '',
+      messageDisabled: false,
+      modelShow: false,
+      scrollTop: 0,
+      pageObj: {
+        pageSize: 1,
+        total: 0,
+        pageStatus: 'loadmore'
+      },
+      loadText: {
+        loadmore: '点击或上拉加载更多留言',
+        loading: '正在加载留言...',
+        nomore: '没有更多留言了'
+      }
     }
-  }),
+  },
   computed: {},
   methods: {
     // 获取留言列表

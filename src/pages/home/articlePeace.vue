@@ -1,6 +1,6 @@
 <template>
   <view class="article-peace">
-    <nav-header :isBack='true' :borderBottom='true' title='文章排行'></nav-header>
+    <nav-header :isBack='true' title='文章排行'></nav-header>
     <u-tabs class='u-border-bottom' :list="list" :is-scroll="false" :bold='false' :current="current" @change="change"></u-tabs>
     <view class="peace-list">
       <article-list :articleList='articleList' :status='pageObj.pageStatus' @loadmore='initListArticle'></article-list>
@@ -16,27 +16,29 @@ export default {
   components: {
     ArticleList
   },
-  data: () => ({
-    current: 0,
-    list: [
-      {
-        name: '浏览数'
+  data(){
+    return {
+      current: 0,
+      list: [
+        {
+          name: '浏览数'
+        },
+        {
+          name: '点赞数'
+        },
+        {
+          name: '评论数'
+        }
+      ],
+      articleList: [],
+      pageObj: {
+        pageSize: 1,
+        pageStatus: 'loadmore'
       },
-      {
-        name: '点赞数'
-      },
-      {
-        name: '评论数'
-      }
-    ],
-    articleList: [],
-    pageObj: {
-      pageSize: 1,
-      pageStatus: 'loadmore'
-    },
-    scrollTop: 0,
-    sortBy: 'meta.viewTotal'
-  }),
+      scrollTop: 0,
+      sortBy: 'meta.viewTotal'
+    }
+  },
   computed: {},
   methods: {
     // 文章列表

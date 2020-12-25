@@ -5,7 +5,7 @@
       <view class="list-wrap" v-for='item in tagLsit' :key='item._id.id' @click='tagClick(item._id)'>
         <view class="wrap-box">
           <view class="box-title">
-            <u-image width="100%" border-radius='10' error-icon='photo' height="200rpx" mode='scaleToFill' :src="bannerBg"></u-image>
+            <u-image  border-radius='10' error-icon='photo' height="200rpx" mode='scaleToFill' :src="bannerBg"></u-image>
             <u-badge :bgColor='item._id.bgColor' :overflow-count='999' :offset='[-12,-12]' :count="item.count"></u-badge>
           </view>
           <view class="box-name u-line-1">
@@ -17,8 +17,8 @@
         </view>
       </view>
     </view>
-    <view class="classify-empty" v-show='tagLsit.length == 0'>
-      <u-empty mode="list" text='标签数据为空' margin-top='100'></u-empty>
+    <view class="classify-empty" v-if='tagLsit.length == 0'>
+      <u-empty mode="list" text='文章分类数据为空' margin-top='100'></u-empty>
     </view>
     <u-back-top :scroll-top="scrollTop" :duration='200'></u-back-top>
   </view>
@@ -28,11 +28,13 @@
 import { bannerBg } from '@/utils'
 export default {
   components: {},
-  data: () => ({
-    bannerBg,
-    tagLsit: [],
-    scrollTop: 0
-  }),
+  data(){
+    return {
+      bannerBg:bannerBg,
+      tagLsit: [],
+      scrollTop: 0
+    }
+  },
   computed: {},
   methods: {
     async getTagList(){
@@ -97,6 +99,11 @@ export default {
           align-items: center;
           justify-content: center;
           position: relative;
+          /*  #ifdef  MP-WEIXIN  */
+          /deep/ u-image{
+            width: 100%;
+          }
+          /*  #endif  */
         }
         .box-name{
           margin: 10rpx 0 6rpx;

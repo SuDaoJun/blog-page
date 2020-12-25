@@ -1,7 +1,7 @@
-export let baseURL = process.env.NODE_ENV == 'production'?'https://sdjBlog.cn:8090':'http://localhost:3000';
+export let baseURL = process.env.NODE_ENV == 'production'?'https://sdjBlog.cn:8090':'http://192.168.10.82:3000';
 // export let baseURL = process.env.NODE_ENV == 'production'?'https://sdjBlog.cn:8090':'https://sdjBlog.cn:8090';
 export let bannerBg = 'https://s3.ax1x.com/2020/12/07/DzKA7q.jpg';
-export let messageBg = 'https://s3.ax1x.com/2020/12/21/rBk0kq.jpg';
+export let messageBg = 'https://s3.ax1x.com/2020/12/24/rccOxS.jpg';
 
 // 判断深层次对象属性是否存在
 export let objProp = (data, path) => {

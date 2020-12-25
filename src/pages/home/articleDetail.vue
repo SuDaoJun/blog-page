@@ -43,7 +43,7 @@
            <text>{{articleData.meta.likeTotal}}人已赞</text>
            <u-icon :color="isLike?'#dd524d':'#808080'" :name="isLike?'thumb-up-fill':'thumb-up'" size='48' @click='likeClick'></u-icon>
          </view>
-         <view class="like-list" v-show='articleData.linkUser && articleData.linkUser.length > 0'>
+         <view class="like-list" v-if='articleData.linkUser && articleData.linkUser.length > 0'>
            <view class="list-box u-line-1" v-for='item in articleData.linkUser' :ke='item._id'>
              <u-avatar size='80' :src='baseURL+"/blogAdmin/file/down?downId="+item.avatarId' ></u-avatar>
              <text>{{item.name}}</text>
@@ -65,7 +65,7 @@
           <view class="right">
             <view class="top">
               <view class="name">{{res.createUser?res.createUser.name:'--'}}</view>
-              <view class="like" v-show='res.isTop'>
+              <view class="like" v-if='res.isTop'>
                 <u-tag text="置顶" mode='dark'  size='mini' type='warning' shape='circle'  />
               </view>
             </view>
@@ -74,7 +74,7 @@
               <view class="item" v-for="(item, index) in res.replyLimitCommentList" :key="item._id">
                 <view class="username">
                   <text>{{item.replyUser?item.replyUser.name:'--'}}</text>
-                  <view class="usename-box" v-show='item.toUser && item.replyUser && item.toUser._id !==  item.replyUser._id'>
+                  <view class="usename-box" v-if='item.toUser && item.replyUser && item.toUser._id !==  item.replyUser._id'>
                     <text class='box-replay'>回复</text>
                     <text>{{item.toUser?item.toUser.name:'--'}}：</text>
                   </view>
@@ -107,7 +107,7 @@
       <u-icon :color="isLike?'#dd524d':'#808080'" :name="isLike?'thumb-up-fill':'thumb-up'" size='48' @click='likeClick'></u-icon>
     </view>
     <u-back-top :scroll-top="scrollTop" :duration='200'></u-back-top>
-    <login-modal :modelShow='modelShow' @closeModal='modelShow = false'></login-modal>
+    <login-modal :modelShow='modelShow' @closeModal='closeModal'></login-modal>
     <u-toast ref="uToast" />
     <u-popup v-model="popupShow" mode='bottom' :mask-close-able='false' border-radius='16' z-index='9998' :closeable='true'>
       <view class='popup-box content-comment'>
@@ -121,7 +121,7 @@
           <view class="right">
             <view class="top">
               <view class="name">{{popupCommentObj.createUser?popupCommentObj.createUser.name:'--'}}</view>
-              <view class="like" v-show='popupCommentObj.isTop'>
+              <view class="like" v-if='popupCommentObj.isTop'>
                 <u-tag text="置顶" mode='dark'  size='mini' type='warning' shape='circle'  />
               </view>
             </view>
@@ -144,7 +144,7 @@
             <view class="item-right">
               <view class="right-username">
                 <text>{{item.replyUser?item.replyUser.name:'--'}}</text>
-                <view class="usename-box" v-show='item.toUser && item.replyUser && item.toUser._id !==  item.replyUser._id'>
+                <view class="usename-box" v-if='item.toUser && item.replyUser && item.toUser._id !==  item.replyUser._id'>
                   <text class='box-txt'>回复</text>
                   <text>{{item.toUser?item.toUser.name:'--'}}：</text>
                 </view>
@@ -172,39 +172,41 @@ export default {
   components: {
     LoginModal
   },
-  data: () => ({
-    baseURL,
-    windowHeight: 0,
-    heightChange: false,
-    modelShow: false,
-    scrollTop: 0,
-    articleId: '',
-    articleData: {
-      meta: {}
-    },
-    commentList: [],
-    commentValue: '',
-    isLike: false,
-    pageObj: {
-      pageSize: 1,
-      pageStatus: 'loadmore',
-      total: 0
-    },
-    loadText: {
-      loadmore: '点击或上拉加载更多评论',
-      loading: '正在加载评论...',
-      nomore: '没有更多评论了'
-    },
-    commentObj: {
-      commentPlaceholder: '评论....',
-      commentDisabled: false,
-      commentFocus: false,
-      replyId: '',
-      commentId: '',
-    },
-    popupShow: false,
-    popupCommentObj: {}
-  }),
+  data(){
+    return {
+      baseURL,
+      windowHeight: 0,
+      heightChange: false,
+      modelShow: false,
+      scrollTop: 0,
+      articleId: '',
+      articleData: {
+        meta: {}
+      },
+      commentList: [],
+      commentValue: '',
+      isLike: false,
+      pageObj: {
+        pageSize: 1,
+        pageStatus: 'loadmore',
+        total: 0
+      },
+      loadText: {
+        loadmore: '点击或上拉加载更多评论',
+        loading: '正在加载评论...',
+        nomore: '没有更多评论了'
+      },
+      commentObj: {
+        commentPlaceholder: '评论....',
+        commentDisabled: false,
+        commentFocus: false,
+        replyId: '',
+        commentId: '',
+      },
+      popupShow: false,
+      popupCommentObj: {}
+    }
+  },
   computed: {
 
   },
@@ -375,6 +377,15 @@ export default {
       this.pageObj.pageStatus = 'loading';
       this.commentList = [];
       this.getCommentList();
+    },
+    // 关闭登录框
+    closeModal(){
+      let data = this.articleData;
+      let userId = this.vuex_userInfo.id;
+      if(data.linkUser.length > 0 && userId){
+        this.isLike = data.linkUser.some(({_id})=>_id == userId);
+      }
+      this.modelShow = false;
     },
     // 返回首页
     backHome(){

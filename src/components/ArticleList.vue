@@ -2,11 +2,13 @@
   <view class="home-article">
       <view class="article-item u-border-bottom" v-for="(item, index) in articleList" :key="item._id" @click='articleDetail(item._id)'>
         <view class="item-img">
-          <u-image  mode="scaleToFill" error-icon='photo' :height='128' :src="item.image"></u-image>
+          <u-image  mode="scaleToFill" error-icon='photo' width="200rpx" :height='128' :src="item.image"></u-image>
         </view>
         <view class="item-box">
           <view class="box-info">
-            <view class='box-title u-line-1' v-html='item.title'></view>
+            <view class='box-title u-line-1'>
+              <rich-text :nodes="item.title"></rich-text>
+            </view>
             <view class='box-desc u-line-1'>{{item.description}}</view>
           </view>
           <view class="box-bottom">
@@ -57,7 +59,9 @@ export default {
       }
     }
   },
-  data: () => ({}),
+  data(){
+    return {}
+  },
   computed: {},
   methods: {
     articleDetail(id){

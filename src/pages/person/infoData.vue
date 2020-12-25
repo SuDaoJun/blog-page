@@ -1,6 +1,6 @@
 <template>
   <view class="info-data">
-    <nav-header :isBack='true' :borderBottom='true' title='个人信息'></nav-header>
+    <nav-header :isBack='true' title='个人信息'></nav-header>
     <view class="show-data">
       <u-cell-group>
         <u-cell-item title="头像" @click='avatarChange'>
@@ -229,6 +229,13 @@ export default {
       this.$refs.upwdForm.setRules(this.pwdRules);
     },
     pwdPopupClose(){
+      // #ifdef MP-WEIXIN
+      this.pwdForm = {
+        oldPwd: '',
+        newPwd: '',
+        confirPwd: ''
+      }
+      // #endif
       this.$refs.upwdForm.resetFields();
     },
     // 修改密码

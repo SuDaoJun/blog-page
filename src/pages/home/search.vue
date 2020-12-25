@@ -1,20 +1,20 @@
 <template>
   <view class="index-search">
-    <nav-header :isBack='true' :borderBottom='false' :useSlot='true' :keyword='keyword' @handleSearch='handleSearch'></nav-header>
+    <nav-header :isBack='true' :useSlot='true' :keyword='keyword' @handleSearch='handleSearch'></nav-header>
     <view class="search-banner">
       <u-image width="100%" height="360rpx" error-icon='photo' mode='scaleToFill' :src="bannerBg"></u-image>
       <view class="banner-txt">
         搜索关键字：{{keyword || '无'}}
       </view>
     </view>
-    <view class="search-history" v-show='historyList.length > 0'>
+    <view class="search-history" v-if='historyList.length > 0'>
       <view class="history-title">
         <text>历史搜索</text>
         <u-icon name="close" color='#c8c9cc' size='36' @click='clearHistory'></u-icon>
       </view>
       <view class="history-list">
-        <view class="list-item" v-for='item in historyList'>
-          <u-tag  :key='item' :text="item" @click='itemClick(item)' type="info" shape='circle' />
+        <view class="list-item" v-for='(item,index) in historyList' :key='index'>
+          <u-tag  :text="item" @click='itemClick(item)' type="info" shape='circle' />
         </view>
         
       </view>
@@ -31,17 +31,19 @@ export default {
   components: {
     ArticleList
   },
-  data: () => ({
-    bannerBg: bannerBg,
-    keyword: '',
-    articleList: [],
-    historyList: [],
-    pageObj: {
-      pageSize: 1,
-      pageStatus: 'loadmore'
-    },
-    scrollTop: 0
-  }),
+  data(){
+    return {
+      bannerBg: bannerBg,
+      keyword: '',
+      articleList: [],
+      historyList: [],
+      pageObj: {
+        pageSize: 1,
+        pageStatus: 'loadmore'
+      },
+      scrollTop: 0
+    }
+  },
   computed: {},
   methods: {
     handleSearch(val){
@@ -55,8 +57,8 @@ export default {
       uni.removeStorageSync('historyList');
       this.historyList = [];
     },
-    itemClick(keyword){
-      this.keyword = keyword;
+    itemClick(item){
+      this.keyword = item;
       this.pageObj.pageSize = 1;
       this.pageObj.pageStatus = 'loading';
       this.articleList = [];
@@ -72,11 +74,9 @@ export default {
           let historyList = uni.getStorageSync("historyList");
           historyList.unshift(keyword);
           historyList = [...new Set(historyList)];
-          console.info(historyList)
           if(historyList.length > 8){
             historyList = historyList.slice(0,8);
           }
-          console.info(historyList)
           this.historyList = historyList;
           uni.setStorageSync("historyList", historyList)
         }else{
@@ -100,7 +100,7 @@ export default {
         dataList.forEach(item=>{
           item.image = `${baseURL}/blogAdmin/file/down?downId=${item.imgId}`;
           item.createTime = item.createTime.split(' ')[0];
-          item.title = item.title.replace(replaceReg, `<span>${keyword}</span>`)
+          item.title = item.title.replace(replaceReg, `<span style='color: #1BA2E8;'>${keyword}</span>`)
         })
         this.articleList = this.articleList.concat(dataList);
         if(this.articleList.length == result.data.count){

@@ -15,11 +15,13 @@
 import { bannerBg} from '@/utils'
 export default {
   components: {},
-  data: () => ({
-    bannerBg: bannerBg,
-    loading: false,
-    articleObj: {}
-  }),
+  data(){
+    return {
+      bannerBg: bannerBg,
+      loading: false,
+      articleObj: {}
+    }
+  },
   computed: {},
   methods: {
     articleResult(){

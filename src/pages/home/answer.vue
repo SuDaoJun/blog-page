@@ -16,11 +16,13 @@
 import { answerArr, bannerBg} from '@/utils'
 export default {
   components: {},
-  data: () => ({
-    bannerBg: bannerBg,
-    answerTxt: '',
-    btnDisabled: true
-  }),
+  data(){
+    return {
+      bannerBg: bannerBg,
+      answerTxt: '',
+      btnDisabled: true
+    }
+  },
   computed: {},
   methods: {
     answerResult(){

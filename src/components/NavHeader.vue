@@ -63,7 +63,7 @@ export default {
     },
     borderBottom: {
       type: Boolean,
-      default: true
+      default: false
     },
     backTextColor: {
       type: Object,
@@ -82,9 +82,11 @@ export default {
       }
     }
   },
-  data: () => ({
-    value: ''
-  }),
+  data(){
+    return {
+      value: ''
+    }
+  },
   computed: {},
   methods: {
     handleSearch: function(value){

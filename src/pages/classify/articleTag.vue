@@ -1,6 +1,6 @@
 <template>
   <view class="index-search">
-    <nav-header :isBack='true' :borderBottom='true' :title='tagTitle'></nav-header>
+    <nav-header :isBack='true' :title='tagTitle'></nav-header>
     <view class="search-banner">
       <u-image width="100%" height="360rpx" error-icon='photo' mode='scaleToFill' :src="bannerBg"></u-image>
     </view>
@@ -16,17 +16,19 @@ export default {
   components: {
     ArticleList
   },
-  data: () => ({
-    bannerBg: bannerBg,
-    tagTitle: '文章标签',
-    tagId: '',
-    articleList: [],
-    pageObj: {
-      pageSize: 1,
-      pageStatus: 'loadmore'
-    },
-    scrollTop: 0
-  }),
+  data(){
+    return {
+      bannerBg: bannerBg,
+      tagTitle: '文章标签',
+      tagId: '',
+      articleList: [],
+      pageObj: {
+        pageSize: 1,
+        pageStatus: 'loadmore'
+      },
+      scrollTop: 0
+    }
+  },
   computed: {},
   methods: {
     // 文章列表

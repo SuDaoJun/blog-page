@@ -1,6 +1,6 @@
 <template>
   <view class="article-peace">
-    <nav-header :isBack='true' :borderBottom='true' title='历史足迹'></nav-header>
+    <nav-header :isBack='true' title='历史足迹'></nav-header>
     <u-tabs class='u-border-bottom' :list="list" :is-scroll="false" :bold='false' :current="current" @change="change"></u-tabs>
     <view class="peace-list">
       <article-list :articleList='articleList' :status='pageObj.pageStatus' @loadmore='initListArticle'></article-list>
@@ -19,28 +19,30 @@ export default {
     ArticleList,
     LoginModal
   },
-  data: () => ({
-    modelShow: false,
-    current: 0,
-    viewType: '1',
-    list: [
-      {
-        name: '最近浏览'
+  data(){
+    return {
+      modelShow: false,
+      current: 0,
+      viewType: '1',
+      list: [
+        {
+          name: '最近浏览'
+        },
+        {
+          name: '我的点赞'
+        },
+        {
+          name: '我的评论'
+        }
+      ],
+      articleList: [],
+      pageObj: {
+        pageSize: 1,
+        pageStatus: 'loadmore'
       },
-      {
-        name: '我的点赞'
-      },
-      {
-        name: '我的评论'
-      }
-    ],
-    articleList: [],
-    pageObj: {
-      pageSize: 1,
-      pageStatus: 'loadmore'
-    },
-    scrollTop: 0,
-  }),
+      scrollTop: 0,
+    }
+  },
   computed: {},
   methods: {
     // 文章列表
@@ -74,7 +76,7 @@ export default {
           pageObj.pageStatus = 'nomore';
         }
       }else{
-        this.$u.toast('请先登录');
+        this.$u.toast('查看信息前，请先登录');
         this.modelShow = true;
       }
     },

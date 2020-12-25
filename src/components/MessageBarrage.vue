@@ -1,24 +1,13 @@
 <template>
 	<view class="l-barrage">
 		<block v-for="(item,index) in items" :key="index">
-			<!-- #ifdef H5 -->
-				<text v-if="item.display" class="aon"
-				  :style="{top: `${item.top}%`,color: item.color}"
-				>
-					{{item.text}}
-				</text>
-			<!-- #endif -->
-			
-			<!-- #ifndef H5 -->
-				<text v-if="item.display" class="aon" 
-				  :style="{top: `${item.top}%`,color: item.color,
-				  animation: `mymove ${Number(item.time)}s linear forwards`
-				  }"
-				>
-					{{item.text}}
-				</text>
-			<!-- #endif -->
-			
+			<text v-if="item.display" class="aon" 
+        :style="{top: `${item.top}rpx`,color: item.color,
+        animationDuration: `${Number(item.time)}s`
+        }"
+      >
+        {{item.text}}
+      </text>
 		</block>
 	</view>
 </template>
@@ -37,37 +26,37 @@ function getRandomColor() {
 }	
 
 export default {
-	name: 'l-barrage',
 	props: {
 		minTime: {
 			type: Number,
-			default: 8
+			default: 10
 		},
 		maxTime: {
 			type: Number,
-			default: 16
-		},
-		minTop: {
-			type: Number,
-			default: 0
-		},
-		maxTop: {
-			type: Number,
-			default: 90
+			default: 24
 		}
 	},
 	data() {
 		return {
       items: [],
-      cycle: null
+      cycle: null,
+      selectArr: [20,60,100,140,180,220,260,300,340,380]
 		}
   },
 	methods: {
 		add(text = '',time = Math.ceil(Math.floor(Math.random()*(this.maxTime-this.minTime+1)+this.minTime))) {
+      if(this.selectArr.length == 0){
+        this.selectArr = [20,60,100,140,180,220,260,300,340,380];
+      }
+      let maxIndex = this.selectArr.length-1;
+      let minIndex = 0;
+      let index = Math.floor(Math.random() * (maxIndex - minIndex + 1)) + minIndex;
+      let topValue = this.selectArr[index];
+      this.selectArr.splice(index, 1);
 			this.items.push({
 				text,
 				time,
-				top: Math.ceil(Math.random()*(this.maxTop-this.minTop+1)+this.minTop),
+				top: topValue,
         color: getRandomColor(),
         display: 'show'
 			});
@@ -81,10 +70,7 @@ export default {
 			let i = 0,len = items.length;
 			
 			this.cycle = setInterval(()=> {
-				let time = 8;
-				// #ifndef H5
-					time = Math.ceil(Math.floor(Math.random()*(this.maxTime-this.minTime+1)+this.minTime));
-				// #endif
+				let time = Math.ceil(Math.floor(Math.random()*(this.maxTime-this.minTime+1)+this.minTime));
 				
 				if (i < len) {
           let content = items[i].content?items[i].content:'';
@@ -108,10 +94,8 @@ export default {
 .aon{
 position: absolute;
 white-space:nowrap;
-animation: mymove 8s linear forwards;
-animation-timing-function: linear;
--webkit-animation-timing-function: linear;
-animation-fill-mode: forwards;
+line-height: 40rpx;
+animation: mymove 10s linear forwards;
 }
 .l-barrage{
   z-index: 99;
@@ -123,24 +107,6 @@ animation-fill-mode: forwards;
 }
 
 @keyframes mymove
-{
-from{left: 100%;}
-  to{left: -200%;}
-}
-
-@-moz-keyframes mymove /* Firefox */
-{
-from{left: 100%;}
-  to{left: -200%;}
-}
-
-@-webkit-keyframes mymove /* Safari and Chrome */
-{
-from{left: 100%;}
-  to{left: -200%;}
-}
-
-@-o-keyframes mymove /* Opera */
 {
 from{left: 100%;}
   to{left: -200%;}

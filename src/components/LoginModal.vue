@@ -227,6 +227,18 @@ export default {
     },
     popupClose() {
       this.$emit("closeModal", "");
+      // #ifdef MP-WEIXIN
+      this.loginForm = {
+        name: "",
+        password: ""
+      }
+      this.registerForm = {
+        name: "",
+        password: "",
+        confirPwd: "",
+        email: ""
+      }
+      // #endif
       this.$refs.uLoginForm.resetFields();
       this.$refs.uRegisterForm.resetFields();
     },

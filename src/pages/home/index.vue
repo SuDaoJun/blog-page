@@ -27,51 +27,53 @@ export default {
   components: {
     ArticleList
   },
-  data: () => ({
-    swiperList: [],
-    titleStyle: {
-      textAlign: 'center'
-    },
-    typeList: [
-      {
-        title: '排行',
-        path: '/pages/home/articlePeace',
-        iconObj: {
-          name: 'biaoqiankuozhan_paihang-384',
-          size: '50',
-          color: '#3B8EE8',
-          customPrefix: true
-        }
+  data(){
+    return {
+      swiperList: [],
+      titleStyle: {
+        textAlign: 'center'
       },
-      {
-        title: '答案',
-        path: '/pages/home/answer',
-        iconObj: {
-          name: 'file-text',
-          size: '50',
-          color: '#5078AA',
-          customPrefix: false
+      typeList: [
+        {
+          title: '排行',
+          path: '/pages/home/articlePeace',
+          iconObj: {
+            name: 'biaoqiankuozhan_paihang-384',
+            size: '50',
+            color: '#3B8EE8',
+            customPrefix: true
+          }
+        },
+        {
+          title: '答案',
+          path: '/pages/home/answer',
+          iconObj: {
+            name: 'file-text',
+            size: '50',
+            color: '#5078AA',
+            customPrefix: false
+          }
+        },
+        {
+          title: '看看',
+          path: '/pages/home/view',
+          iconObj: {
+            name: 'icon--scrm-49',
+            size: '80',
+            color: '#EE8848',
+            customPrefix: true
+          }
         }
+      ],
+      keywordSearch: '',
+      articleList: [],
+      pageObj: {
+        pageSize: 1,
+        pageStatus: 'loadmore'
       },
-      {
-        title: '看看',
-        path: '/pages/home/view',
-        iconObj: {
-          name: 'icon--scrm-49',
-          size: '80',
-          color: '#EE8848',
-          customPrefix: true
-        }
-      }
-    ],
-    keywordSearch: '',
-    articleList: [],
-    pageObj: {
-      pageSize: 1,
-      pageStatus: 'loadmore'
-    },
-    scrollTop: 0
-  }),
+      scrollTop: 0
+    }
+  },
   computed: {},
   methods: {
     // 文章按点赞排序轮播图
