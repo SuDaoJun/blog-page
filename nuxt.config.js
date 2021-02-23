@@ -31,6 +31,10 @@ export default {
       },
       {
         src:'/navigator.js'
+      },
+      {
+        src:'/bgShow.js',
+        body: true
       }
     ]
   },
