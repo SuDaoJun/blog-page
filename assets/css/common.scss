@@ -51,6 +51,16 @@ select:-webkit-autofill {
 ::-webkit-scrollbar {
   display: none;
 }
+code::-webkit-scrollbar {
+  display: block;
+  height: 12px;
+  background: #ddd;
+  border-radius: 4px;
+}
+code::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 4px;
+}
 .body-index {
   // 时间范围中间文字（至）宽度
   .el-date-editor {

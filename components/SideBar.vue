@@ -16,13 +16,19 @@
         </el-tooltip>
       </div>
       <div class="info-icon">
-        <el-tooltip effect="dark" content="Github" placement="top">
-          <a href="https://github.com/SuDaoJun" target="_blank" class="mio-icon-github iconfont"></a>
-        </el-tooltip>
         <el-tooltip effect="dark" content="掘金" placement="top">
           <a href="https://juejin.im/user/5afc4e976fb9a07aa2138bdd/posts" target="_blank" class='icon-svg'>
             <svg id="icon-juejin" viewBox="0 0 1024 1024"><path d="M208 479l-44 36 349 276 347-276-44-36-304 239-304-239z" fill='#bba477'></path><path d="M345 368l-42 36 209 166 210-167-46-34-164 130-167-131zM511 235l-70 55 71 56 68-55-69-56z" fill='#bba477'></path></svg>
           </a>
+        </el-tooltip>
+        <el-tooltip effect="dark" content="码云" placement="top">
+          <a href="https://gitee.com/sdj_work" style='font-size: 28px;' target="_blank" class="mio-icon-gitee-fill-round iconfont"></a>
+        </el-tooltip>
+        <el-tooltip effect="dark" content="博客后台" placement="top">
+          <a href="http://sdjblog.cn:8080/" target="_blank" class="mio-icon-icon_caidan iconfont"></a>
+        </el-tooltip>
+        <el-tooltip effect="dark" content="Github" placement="top">
+          <a href="https://github.com/SuDaoJun" target="_blank" class="mio-icon-github iconfont"></a>
         </el-tooltip>
         <el-tooltip effect="dark" content="sdj__work@163.com" placement="top">
           <a href="mailto:sdj__work@163.com" class="el-icon-message"></a>
