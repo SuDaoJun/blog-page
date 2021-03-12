@@ -8,7 +8,7 @@
          <div class="item-header" :style="{backgroundImage: `url(${require(`@/assets/img/note${item.bg}_1.png`)})`}">{{item.createTime.split(' ')[0]}}</div>
          <div class="item-body" :style="{backgroundImage: `url(${require(`@/assets/img/note${item.bg}_2.png`)})`}">{{item.content}}</div>
          <div class="item-footer" :style="{backgroundImage: `url(${require(`@/assets/img/note${item.bg}_3.png`)})`}">
-             <el-image v-if='item.createUser'
+             <el-image v-if='item.createUser && item.createUser.length > 0'
                :src='baseURL+"/blogAdmin/file/down?downId="+item.createUser[0].avatarId' class='image-avatar'>
                <div slot="error" class="icon-avatar">
                  <i class="el-icon-user-solid"></i>
@@ -19,7 +19,7 @@
                  <i class="el-icon-user-solid"></i>
                </div>
              </div>
-             <p>{{item.createUser?item.createUser[0].name:'--'}}</p>
+             <p>{{item.createUser && item.createUser.length > 0?item.createUser[0].name:'--'}}</p>
          </div>
        </div>
      </div>
