@@ -3,7 +3,7 @@
     <div class="wrapper-index">
       <div class="wrapper-article">
          <div class="article-list" style="overflow:auto">
-           <div v-for="item in articleList" class="list-item" @click='articleDetail(item._id)'>
+           <nuxt-link v-for="item in articleList" :key='item._id' class="list-item" :to="`/articleDetail/${item._id}`">
              <div class="item-info">
                <div class="info-text">
                  <h3>{{item.title}}</h3>
@@ -46,7 +46,7 @@
                  <i class="el-icon-picture-outline"></i>
                </div>
              </div>
-           </div>
+           </nuxt-link>
          </div>
          <div class="article-all" v-if="articleList.length == 0">
            <empty-show :hide='true' type='slot' showTxt='暂无更多文章'>
@@ -135,9 +135,6 @@ export default {
           this.$message.warning('获取文章列表失败')
         }
       })
-    },
-    articleDetail(id){
-      this.$router.push({path: `/articleDetail/${id}`})
     },
     currentChange(page){
       this.$router.push(`/article/page/${page}`);

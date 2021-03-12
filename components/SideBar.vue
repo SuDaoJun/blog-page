@@ -1,10 +1,10 @@
 <template>
   <div class="side-bar">
     <div class="bar-info">
-      <div class="info-avatar" @click='routerHome'>
+      <nuxt-link tag='div' to='/article/page' class="info-avatar">
         <el-image
         :src="require('../assets/img/avatar.png')"></el-image>
-      </div>
+      </nuxt-link>
       <div class="info-title">
         路遥
       </div>
@@ -122,9 +122,6 @@ export default {
 
   },
   methods: {
-    routerHome(){
-      this.$router.push('/article/page');
-    },
     sortClick(type){
       this.$store.commit('changeFilterObj', {sortBy: type})
       this.$router.push('/article/page');

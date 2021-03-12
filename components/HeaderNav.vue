@@ -4,20 +4,22 @@
       <div class="content-nav">
         <el-menu :default-active="activeIndex" class="nav-menu" mode="horizontal" @select="handleSelect">
           <el-menu-item :index="item.routeName" v-for="item in menuList" :key='item.routeName'>
-            <div class="menu-item">
+            <nuxt-link tag='div' :to="item.routePath" class="menu-item">
               <i :class='item.icon'></i>
               <span>{{item.name}}</span>
-            </div>
+            </nuxt-link>
           </el-menu-item>
         </el-menu>
       </div>
       <div class="content-info" v-if='userInfo'>
-        <el-image @click='routhHome' v-if='userInfo.avatarId' :src='baseURL+"/blogAdmin/file/down?downId="+userInfo.avatarId'
+        <nuxt-link tag='div' to='/article/page' v-if='userInfo.avatarId'>
+          <el-image :src='baseURL+"/blogAdmin/file/down?downId="+userInfo.avatarId'
           class='image-circle'>
           <div slot="error" class="image-slot">
             <i class="el-icon-user-solid"></i>
           </div>
         </el-image>
+        </nuxt-link>
         <div v-else class="image-slot">
           <i class="el-icon-user-solid"></i>
         </div>
@@ -86,21 +88,25 @@ export default {
         {
           name: "文章",
           routeName: "article-page-num",
+          routePath: "/article/page",
           icon: "el-icon-document"
         },
         {
           name: "归档",
           routeName: "article-archive",
+          routePath: "/article/archive",
           icon: "mio-icon-guidang iconfont"
         },
         {
           name: "项目",
           routeName: "article-project",
+          routePath: "/article/project",
           icon: "el-icon-tickets"
         },
         {
           name: "留言",
           routeName: "message",
+          routePath: "/message",
           icon: "el-icon-edit-outline"
         }
       ],
@@ -319,21 +325,9 @@ export default {
       }
       this.activeIndex = name
     },
-    routhHome(){
-      this.$router.push({path: '/article/page'})
-    },
     //  菜单点击
     handleSelect(index,indexPath) {
       this.activeIndex = index
-      if(index === 'article-page-num'){
-        this.$router.push({path: '/article/page'})
-      }else if(index === 'article-archive'){
-        this.$router.push({path: '/article/archive'})
-      }else if(index === 'article-project'){
-        this.$router.push({path: '/article/project'})
-      }else if(index === 'message'){
-        this.$router.push({path: '/message'})
-      }
     }
   },
   components: {

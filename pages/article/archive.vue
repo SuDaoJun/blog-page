@@ -12,7 +12,7 @@
            <div class="list-card">
              <div class="card-box" v-for='dataItem in item.articleArr' :key='dataItem.articleId'>
                <p>{{dataItem.createTime.split(' ')[0]}}</p>
-               <h4 @click='articleDetail(dataItem.articleId)'>{{dataItem.title}}</h4>
+               <router-link tag='h4' :to="`/articleDetail/${dataItem.articleId}`">{{dataItem.title}}</router-link>
              </div>
            </div>
          </el-timeline-item>
@@ -78,9 +78,7 @@ export default {
   mounted() {
   },
   methods: {
-    articleDetail(articleId){
-      this.$router.push({path: `/articleDetail/${articleId}`})
-    }
+
   },
   watch: {
 
