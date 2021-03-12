@@ -568,7 +568,7 @@
   z-index: 1;
   border-color: #0366d6;
 }
-ol, ul, li{
+.detail-content ol, .detail-content ul, .detail-content li{
   list-style: disc;
 }
 .markdown-body .task-list-item {
