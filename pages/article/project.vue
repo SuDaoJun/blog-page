@@ -113,6 +113,7 @@ export default {
         display: block;
         background-color: #fff;
         border: 1px solid #e8e8e8;
+        color: rgba(0,0,0,.8);
         transition: all .4s;
         &:hover{
           border-color: rgba(0,0,0,.09);
