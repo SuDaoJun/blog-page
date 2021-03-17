@@ -4,8 +4,8 @@
 
 ## 效果图
 
-![首页](https://s3.ax1x.com/2021/02/25/yviqrF.png)
-![留言](https://s3.ax1x.com/2021/02/25/yviqrF.png)
+![首页](https://s3.ax1x.com/2021/03/17/6cXhRS.png)
+![留言](https://s3.ax1x.com/2021/03/17/6cvju4.png)
 
 完整效果请看：[http://sdjBlog.cn/](http://sdjBlog.cn/)
 
