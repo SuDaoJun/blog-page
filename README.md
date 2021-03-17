@@ -2,6 +2,13 @@
 
 此 nuxt-blog 项目是基于 nuxt 服务器渲染(SSR)构建
 
+## 效果图
+
+![首页](https://s3.ax1x.com/2021/02/25/yviqrF.png)
+![留言](https://s3.ax1x.com/2021/02/25/yviqrF.png)
+
+完整效果请看：[http://sdjBlog.cn/](http://sdjBlog.cn/)
+
 ## 功能描述
 
 ### 已经实现功能
