@@ -28,11 +28,6 @@
 - [x] 项目展示
 - [x] 留言
 
-### 待实现
-
-- [ ] 移动端适配
-- [ ] 使用TypeScript重构
-- [ ] 使用Nuxt.js服务器渲染，实现seo
 
 ## 前端技术
 
@@ -95,3 +90,15 @@ npm run build
 > [后端：https://github.com/SuDaoJun/blog-node](https://github.com/SuDaoJun/blog-node)
 
 > [博客地址：http://sdjBlog.cn/](http://sdjBlog.cn/)
+
+**项目系列文章：**
+
+> [Vue+Nuxt 博客展示](https://juejin.cn/post/6940629661147725861)
+
+> [Vue+uniapp 博客展示](https://juejin.cn/post/6941182524303343624)
+
+> [Vue+ElementUI 后台博客管理](https://juejin.cn/post/6935733545029599262)
+
+> [node + koa + mongodb 博客接口开发](https://juejin.cn/post/6937589228423348238)
+
+> [node + express + mongodb 博客接口开发](https://juejin.cn/post/6865113400251432967)
